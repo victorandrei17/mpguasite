@@ -1,20 +1,246 @@
 /*
- * styles.css — Estilos de componentes e layout do site
- * Depende de tokens.css e base.css (devem ser importados antes).
+ * styles.css — Componentes e layout do site
+ * Depende de tokens.css e base.css (devem ser carregados antes).
  *
- * Estrutura prevista:
- *   1. Utilitários de layout (.wrap, .section, etc.)
- *   2. Header e navegação
+ * Índice:
+ *   1. Utilitários de layout
+ *   2. Reveal — animação de entrada
  *   3. #hero
- *   4. #diferenciais
- *   5. #sobre
- *   6. #servicos
- *   7. #clientes
- *   8. #processo
- *   9. #cta
- *  10. #contato
- *  11. Footer
- *  12. Componentes globais (botões, badges, cards)
- *  13. WhatsApp flutuante
- *  14. Media queries
+ *   4. #diferenciais          (a preencher)
+ *   5. #sobre                 (a preencher)
+ *   6. #servicos              (a preencher)
+ *   7. #clientes              (a preencher)
+ *   8. #processo              (a preencher)
+ *   9. #cta                   (a preencher)
+ *  10. #contato               (a preencher)
+ *  11. Footer                 (a preencher)
+ *  12. Componentes globais    (a preencher)
+ *  13. WhatsApp flutuante     (a preencher)
  */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   1. UTILITÁRIOS DE LAYOUT
+   ───────────────────────────────────────────────────────────────── */
+
+.wrap {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+/* Empurra o conteúdo abaixo do header fixo */
+main {
+  padding-top: var(--header-height);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   2. REVEAL — fade + translateY ao entrar na viewport
+   JS em js/main.js adiciona .is-visible via IntersectionObserver.
+   ───────────────────────────────────────────────────────────────── */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--space-4));   /* sobe 24 px */
+  transition:
+    opacity   600ms var(--ease-out),
+    transform 600ms var(--ease-out);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Pequena pausa para o hero — dá tempo ao browser pintar antes de animar */
+#hero .reveal {
+  transition-delay: 180ms;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   3. #HERO
+   Full-width, imagem de fundo com overlay teal semitransparente,
+   conteúdo centralizado vertical e horizontalmente.
+   ───────────────────────────────────────────────────────────────── */
+
+#hero {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-image: url('../assets/img/hero-funil-porto.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  overflow: hidden;
+}
+
+/* Overlay — Pantone 316C a 78 % de opacidade */
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: color-mix(in srgb, var(--color-teal-principal) 78%, transparent);
+  pointer-events: none;
+}
+
+/* Contêiner do conteúdo, acima do overlay */
+.hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-block: var(--space-8);
+  padding-inline: var(--space-4);
+  max-width: 860px;
+  margin-inline: auto;
+  width: 100%;
+}
+
+/* H1 — marca em maiúsculas, peso 500, escala fluida */
+.hero-content h1 {
+  font-family: var(--font-titulo);
+  font-size: var(--text-4xl);
+  font-weight: 500;
+  color: var(--color-fundo);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+  margin: 0;
+  max-width: none;
+}
+
+/* Subtítulo — branco a 80 % de opacidade */
+.hero-subtitulo {
+  font-family: var(--font-corpo);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: color-mix(in srgb, var(--color-fundo) 80%, transparent);
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  margin-top: var(--space-3);
+  max-width: none;
+}
+
+/* Botão CTA — teal 7718C, texto escuro teal 316C */
+.btn-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+  padding-block: var(--space-3);
+  padding-inline: var(--space-5);
+
+  background-color: var(--color-teal-secundario);
+  color: var(--color-teal-principal);
+
+  font-family: var(--font-corpo);
+  font-size: var(--text-md);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+
+  transition:
+    background-color var(--transition),
+    transform        var(--transition),
+    box-shadow       var(--transition);
+}
+
+.btn-hero:hover {
+  background-color: var(--color-teal-400);
+  color: var(--color-teal-principal);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-hero:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-hero svg {
+  flex-shrink: 0;
+}
+
+
+/* ─── Responsivo ─────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  #hero {
+    min-height: 70vh;
+  }
+
+  .hero-content {
+    padding-block: var(--space-7);
+    padding-inline: var(--space-3);
+  }
+
+  .hero-content h1 {
+    letter-spacing: 0.04em;
+  }
+
+  .btn-hero {
+    font-size: var(--text-base);
+    padding-inline: var(--space-4);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   4. #DIFERENCIAIS — a preencher
+   ───────────────────────────────────────────────────────────────── */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   5. #SOBRE — a preencher
+   ───────────────────────────────────────────────────────────────── */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   6. #SERVICOS — a preencher
+   ───────────────────────────────────────────────────────────────── */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   7. #CLIENTES — a preencher
+   ───────────────────────────────────────────────────────────────── */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   8. #PROCESSO — a preencher
+   ───────────────────────────────────────────────────────────────── */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   9. #CTA — a preencher
+   ───────────────────────────────────────────────────────────────── */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   10. #CONTATO — a preencher
+   ───────────────────────────────────────────────────────────────── */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   11. FOOTER — a preencher
+   ───────────────────────────────────────────────────────────────── */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   12. COMPONENTES GLOBAIS — a preencher
+   ───────────────────────────────────────────────────────────────── */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   13. WHATSAPP FLUTUANTE — a preencher
+   ───────────────────────────────────────────────────────────────── */
