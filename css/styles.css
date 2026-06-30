@@ -1,0 +1,20 @@
+/*
+ * styles.css — Estilos de componentes e layout do site
+ * Depende de tokens.css e base.css (devem ser importados antes).
+ *
+ * Estrutura prevista:
+ *   1. Utilitários de layout (.wrap, .section, etc.)
+ *   2. Header e navegação
+ *   3. #hero
+ *   4. #diferenciais
+ *   5. #sobre
+ *   6. #servicos
+ *   7. #clientes
+ *   8. #processo
+ *   9. #cta
+ *  10. #contato
+ *  11. Footer
+ *  12. Componentes globais (botões, badges, cards)
+ *  13. WhatsApp flutuante
+ *  14. Media queries
+ */

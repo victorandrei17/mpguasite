@@ -1,0 +1,142 @@
+/*
+ * tokens.css — Design System · Metalúrgica Paranaguá
+ * Fonte da paleta: Manual de Marca (Pantone → sRGB para tela)
+ * Nunca edite valores Pantone aqui; use os arquivos de identidade originais para peças impressas.
+ */
+
+:root {
+
+  /* ─────────────────────────────────────────────────────────────────
+     CORES — PRINCIPAIS
+     ───────────────────────────────────────────────────────────────── */
+
+  --color-teal-principal:  #0c3a3d;   /* Pantone 316C  — teal escura */
+  --color-teal-secundario: #1c7d76;   /* Pantone 7718C — teal média  */
+
+  /* Derivados da paleta teal */
+  --color-teal-700: #155257;          /* intermediário derivado       */
+  --color-teal-400: #4ea69e;          /* Pantone 3272C — auxiliar     */
+  --color-teal-200: #a9cdc3;          /* Pantone 563C  — light        */
+  --color-teal-aux: #2d7a78;          /* Pantone 7717C — auxiliar     */
+  --color-forest:   #1f5c44;          /* Pantone 555C  — verde escuro */
+
+  /* ─────────────────────────────────────────────────────────────────
+     CORES — NEUTROS
+     ───────────────────────────────────────────────────────────────── */
+
+  --color-texto:    #15191a;          /* Pantone Black 6C — texto base    */
+  --color-fundo:    #ffffff;          /* branco puro                       */
+  --color-borda:    #e9ebea;          /* Pantone 663C     — hairline       */
+  --color-cinza-600: #7c8082;         /* Cool Gray 7C     — texto suave    */
+  --color-cinza-400: #a9acad;         /* Pantone 429C     — placeholder    */
+  --color-cinza-300: #c7c9ca;         /* Cool Gray 4C     — divisores      */
+
+  /* ─────────────────────────────────────────────────────────────────
+     CORES — CÍTRICAS (desdobramento por segmento, pág. 10 do manual)
+     ───────────────────────────────────────────────────────────────── */
+
+  --color-citrico-verde:    #6fbe44;  /* Pantone 360C — Engenharia          */
+  --color-citrico-laranja:  #f4792e;  /* Pantone 165C — Construção Civil    */
+  --color-citrico-vermelho: #e0382c;  /* Pantone 179C — Construção Industrial */
+
+  /* Alias de acento (metalurgia = teal secundário) */
+  --accent:     var(--color-teal-secundario);
+  --accent-dim: #eef6f5;
+
+  /* ─────────────────────────────────────────────────────────────────
+     CORES — ESTADOS
+     ───────────────────────────────────────────────────────────────── */
+
+  --color-foco:        var(--color-teal-400);      /* outline de foco visível  */
+  --color-hover:       var(--color-teal-700);      /* hover sobre elementos teal */
+  --color-desabilitado: var(--color-cinza-400);    /* elementos desabilitados    */
+  --color-erro:        #c62828;
+  --color-sucesso:     #2e7d32;
+
+  /* ─────────────────────────────────────────────────────────────────
+     TIPOGRAFIA — FAMÍLIAS
+     Pesos: apenas 400 (regular) e 500 (medium), sem negrito pesado.
+     PF Handbook Pro é a família do manual (ParaType, licenciada).
+     Sora, Inter, IBM Plex Mono vêm do Google Fonts.
+     ───────────────────────────────────────────────────────────────── */
+
+  --font-titulo:   'PF Handbook Pro', 'Sora', sans-serif;
+  --font-corpo:    'Inter', sans-serif;
+  --font-destaque: 'Sora', sans-serif;
+  --font-mono:     'IBM Plex Mono', monospace;
+
+  /* ─────────────────────────────────────────────────────────────────
+     TIPOGRAFIA — ESCALA FLUIDA
+     Mínimo calculado em 320 px, máximo em 1200 px.
+     Fórmula: clamp(min, intercept + slope·vw, max)
+     ───────────────────────────────────────────────────────────────── */
+
+  --text-xs:   clamp(0.625rem, 0.578rem + 0.23vw, 0.75rem);   /* 10 → 12 px */
+  --text-sm:   clamp(0.75rem,  0.704rem + 0.23vw, 0.875rem);  /* 12 → 14 px */
+  --text-base: 1rem;                                            /* 16 px fixo */
+  --text-md:   clamp(1rem,     0.954rem + 0.23vw, 1.125rem);  /* 16 → 18 px */
+  --text-lg:   clamp(1.125rem, 1.079rem + 0.23vw, 1.25rem);   /* 18 → 20 px */
+  --text-xl:   clamp(1.25rem,  1.16rem  + 0.45vw, 1.5rem);    /* 20 → 24 px */
+  --text-2xl:  clamp(1.5rem,   1.32rem  + 0.91vw, 2rem);      /* 24 → 32 px */
+  --text-3xl:  clamp(1.75rem,  1.48rem  + 1.36vw, 2.5rem);    /* 28 → 40 px */
+  --text-4xl:  clamp(2.25rem,  1.80rem  + 2.27vw, 3.5rem);    /* 36 → 56 px */
+
+  /* ─────────────────────────────────────────────────────────────────
+     ESPAÇAMENTO — escala 4 pt
+     ───────────────────────────────────────────────────────────────── */
+
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  16px;
+  --space-4:  24px;
+  --space-5:  32px;
+  --space-6:  48px;
+  --space-7:  64px;
+  --space-8:  96px;
+
+  /* ─────────────────────────────────────────────────────────────────
+     RAIOS DE BORDA
+     ───────────────────────────────────────────────────────────────── */
+
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   8px;
+  --radius-full: 9999px;
+
+  /* ─────────────────────────────────────────────────────────────────
+     CONTÊINERES E LAYOUT
+     ───────────────────────────────────────────────────────────────── */
+
+  --container-max: 1200px;
+  --container-pad: var(--space-4);  /* 24px lateral em todos os breakpoints */
+
+  --header-height: 68px;
+
+  /* ─────────────────────────────────────────────────────────────────
+     BREAKPOINTS (referência — use em @media no CSS, não como var())
+     --bp-sm:  480px
+     --bp-md:  768px
+     --bp-lg:  1024px
+     --bp-xl:  1200px
+     ───────────────────────────────────────────────────────────────── */
+
+  /* ─────────────────────────────────────────────────────────────────
+     HAIRLINES E SOMBRAS
+     ───────────────────────────────────────────────────────────────── */
+
+  --hairline:        1px solid var(--color-borda);
+  --hairline-dark:   1px solid rgba(12, 58, 61, 0.12);
+  --hairline-light:  1px solid rgba(255, 255, 255, 0.10);
+
+  --shadow-sm: 0 1px 4px rgba(12, 58, 61, 0.06);
+  --shadow-md: 0 4px 16px rgba(12, 58, 61, 0.09);
+  --shadow-lg: 0 8px 32px rgba(12, 58, 61, 0.12);
+
+  /* ─────────────────────────────────────────────────────────────────
+     TRANSIÇÕES
+     ───────────────────────────────────────────────────────────────── */
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration: 160ms;
+  --transition: var(--duration) var(--ease-out);
+}
