@@ -1,0 +1,13 @@
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logo-white-title">
+  <title id="logo-white-title">Metalúrgica Paranaguá (versão branca)</title>
+  <!-- Quadro externo -->
+  <rect x="20" y="20" width="200" height="200" fill="none" stroke="#ffffff" stroke-width="6"/>
+  <!-- M — asa esquerda -->
+  <polygon points="42,92 72,70 72,168 42,140" fill="#ffffff"/>
+  <!-- M — corpo central -->
+  <polygon points="72,72 130,72 102,205" fill="#ffffff"/>
+  <!-- P — haste vertical -->
+  <rect x="132" y="42" width="28" height="58" fill="#7fd6cc"/>
+  <!-- P — bowl (arco) -->
+  <path d="M132,92 A58,58 0 0 1 132,208 L132,178 A28,28 0 0 0 132,122 Z" fill="#7fd6cc"/>
+</svg>

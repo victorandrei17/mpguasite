@@ -1,990 +1,748 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Metalúrgica Paranaguá LTDA – Soluções sob medida em mecânica industrial. Engenharia, fabricação e serviços especializados para a indústria em Paranaguá, PR." />
-  <title>Metalúrgica Paranaguá LTDA</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Metalúrgica Paranaguá — engenharia, fabricação e montagem industrial sob medida. Atendemos o Complexo Portuário de Paranaguá e toda a região sul desde 2011.">
+  <title>Metalúrgica Paranaguá — Engenharia e Fabricação Industrial</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <!-- Fontes do design system: Sora (display) · Inter (corpo) · IBM Plex Mono (labels) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 
   <style>
-    /* =============================================
-       PANTONE PALETTE
-       316C · 7718C · 7717C · 3272C · 563C · 624C
-       BLACK 6C · COOL GRAY 7C
-    ============================================= */
+    /* ================================================
+       TOKENS — todos extraídos do designsystem.html
+    ================================================ */
     :root {
-      --p316:  #005F61;   /* PANTONE 316C  – primária escura  */
-      --p7718: #006E6E;   /* PANTONE 7718C – teal médio-escuro*/
-      --p7717: #007E79;   /* PANTONE 7717C – teal médio       */
-      --p3272: #00AFA0;   /* PANTONE 3272C – teal vibrante    */
-      --p563:  #7AC5BD;   /* PANTONE 563C  – teal claro       */
-      --p624:  #A8CAC5;   /* PANTONE 624C  – teal muito claro */
-      --blk6:  #1C1B1B;   /* PANTONE Black 6C                 */
-      --cgray: #9C9FA0;   /* PANTONE Cool Gray 7C             */
+      /* Cores principais */
+      --teal-900:    #0c3a3d;   /* Pantone 316C  */
+      --teal-700:    #155257;   /* intermediário  */
+      --teal-600:    #1c7d76;   /* Pantone 7718C */
+      --teal-aux:    #2d7a78;   /* Pantone 7717C */
+      --teal-400:    #4ea69e;   /* Pantone 3272C */
+      --teal-200:    #a9cdc3;   /* Pantone 563C  */
+      --forest-700:  #1f5c44;   /* Pantone 555C  */
 
-      /* aliases semânticos */
-      --primary:   var(--p316);
-      --secondary: var(--p7717);
-      --accent:    var(--p3272);
-      --light:     var(--p563);
-      --lighter:   var(--p624);
-      --dark:      var(--blk6);
-      --gray:      var(--cgray);
-      --white:     #FFFFFF;
-      --bg-section: rgba(168,202,197,.14);
+      /* Neutras */
+      --ink-900:     #15191a;   /* Pantone Black 6C     */
+      --gray-600:    #7c8082;   /* Cool Gray 7C          */
+      --gray-400:    #a9acad;   /* Pantone 429C          */
+      --gray-300:    #c7c9ca;   /* Cool Gray 4C          */
+      --gray-100:    #e9ebea;   /* Pantone 663C          */
+      --white:       #ffffff;
 
-      --header-h:   72px;
-      --radius:     8px;
-      --radius-lg:  16px;
-      --shadow-sm:  0 2px 10px rgba(0,95,97,.08);
-      --shadow-md:  0 8px 32px rgba(0,95,97,.13);
-      --shadow-lg:  0 20px 60px rgba(0,95,97,.18);
-      --transition: .25s ease;
-      --max-w:      1140px;
+      /* Cítricas por segmento (pág. 10 do manual) */
+      --citrus-green:  #6fbe44;  /* Engenharia      · 360C */
+      --citrus-orange: #f4792e;  /* Constr. Civil   · 165C */
+      --citrus-red:    #e0382c;  /* Constr. Ind.    · 179C */
+      --citrus-teal:   #1c7d76;  /* Metalurgia/Munk · principal */
+
+      --accent:      var(--citrus-teal);
+      --accent-dim:  #eef6f5;
+
+      /* Espaçamento modular */
+      --s1: 8px;  --s2: 16px;  --s3: 24px;
+      --s4: 40px; --s5: 64px;  --s6: 96px;
+
+      /* Tipografia */
+      --font-display: 'Sora', sans-serif;
+      --font-body:    'Inter', sans-serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+
+      /* Bordes */
+      --r-sm: 4px;
+      --r-md: 8px;
+
+      /* Layout */
+      --max-w:    1180px;
+      --header-h: 68px;
     }
 
-    /* =============================================
-       RESET & BASE
-    ============================================= */
+    /* ================================================
+       RESET
+    ================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: 'Roboto', sans-serif;
-      color: var(--dark);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--ink-900);
       background: var(--white);
-      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
-    a { color: inherit; text-decoration: none; }
-    ul { list-style: none; }
+    img   { max-width: 100%; display: block; }
+    a     { color: inherit; text-decoration: none; }
+    ul    { list-style: none; }
     button { cursor: pointer; border: none; background: none; font-family: inherit; }
-    img { display: block; max-width: 100%; }
 
-    /* =============================================
-       UTILITY
-    ============================================= */
-    .container { width: 100%; max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
-
-    .tag-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      font-size: .78rem;
-      font-weight: 600;
-      letter-spacing: .8px;
-      text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: 100px;
-      border: 1.5px solid rgba(0,175,160,.35);
-      background: rgba(0,175,160,.08);
-      color: var(--p7717);
-    }
-    .tag-chip .dot {
-      width: 6px; height: 6px;
-      background: var(--p3272);
-      border-radius: 50%;
-      flex-shrink: 0;
+    /* Foco visível — acessibilidade */
+    :focus-visible {
+      outline: 2px solid var(--teal-400);
+      outline-offset: 3px;
+      border-radius: var(--r-sm);
     }
 
-    .section-label {
-      font-size: .75rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--p3272);
-      margin-bottom: 14px;
-    }
-    .section-title {
-      font-size: clamp(1.7rem, 3.5vw, 2.4rem);
-      font-weight: 800;
-      color: var(--primary);
+    /* ================================================
+       TIPOGRAFIA (escala do design system)
+    ================================================ */
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      letter-spacing: -.01em;
+      color: var(--teal-900);
       line-height: 1.2;
-      position: relative;
-      padding-bottom: 18px;
-      margin-bottom: 14px;
     }
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 40px; height: 3px;
-      background: var(--p3272);
-      border-radius: 2px;
-    }
-    .section-title.centered { text-align: center; }
-    .section-title.centered::after { left: 50%; transform: translateX(-50%); }
+    h1 { font-size: clamp(2.4rem, 5vw, 4rem);   font-weight: 800; line-height: 1.04; }
+    h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 700; }
+    h3 { font-size: 1.15rem; font-weight: 700; }
 
-    .section-sub {
-      color: var(--cgray);
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--teal-600);
+      font-weight: 600;
+      display: block;
+      margin-bottom: var(--s2);
+    }
+    p.lede {
       font-size: 1.05rem;
-      line-height: 1.7;
+      color: #3c4444;
+      max-width: 600px;
+      line-height: 1.65;
     }
-    .section-sub.centered { text-align: center; }
 
+    /* ================================================
+       LAYOUT
+    ================================================ */
+    .wrap {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--s3);
+    }
+    section { padding: var(--s6) 0; }
+
+    /* ================================================
+       BOTÕES (border-radius: 4px — exato do DS)
+    ================================================ */
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 14px 28px;
-      border-radius: 100px;
-      font-weight: 700;
-      font-size: .93rem;
-      transition: all var(--transition);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: .92rem;
+      padding: 12px 22px;
+      border-radius: var(--r-sm);
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease, color .15s ease;
       white-space: nowrap;
     }
-    .btn svg { flex-shrink: 0; }
+    .btn:hover { transform: translateY(-1px); }
 
     .btn-primary {
-      background: var(--primary);
+      background: var(--accent);
       color: var(--white);
-      box-shadow: 0 4px 20px rgba(0,95,97,.3);
+      border-color: var(--accent);
     }
-    .btn-primary:hover {
-      background: var(--p7717);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(0,95,97,.38);
-    }
+    .btn-primary:hover { background: var(--teal-700); border-color: var(--teal-700); }
 
-    .btn-outline {
+    .btn-outline-dark {
+      border-color: var(--teal-900);
+      color: var(--teal-900);
       background: transparent;
-      color: var(--primary);
-      border: 2px solid var(--p563);
     }
-    .btn-outline:hover {
-      border-color: var(--primary);
-      background: rgba(0,95,97,.05);
-      transform: translateY(-2px);
-    }
+    .btn-outline-dark:hover { background: var(--teal-900); color: var(--white); }
 
-    .btn-ghost-white {
-      background: rgba(255,255,255,.15);
+    .btn-outline-light {
+      border-color: rgba(255,255,255,.5);
       color: var(--white);
-      border: 1.5px solid rgba(255,255,255,.4);
-      backdrop-filter: blur(6px);
+      background: transparent;
     }
-    .btn-ghost-white:hover {
-      background: rgba(255,255,255,.25);
-      border-color: rgba(255,255,255,.7);
+    .btn-outline-light:hover {
+      background: var(--white);
+      color: var(--teal-900);
+      border-color: var(--white);
     }
 
-    /* =============================================
-       HEADER – fixo, fundo branco
-    ============================================= */
-    #header {
-      position: fixed;
-      top: 0; left: 0;
+    .btn-wa {
+      background: #25D366;
+      color: var(--white);
+      border-color: #25D366;
+    }
+    .btn-wa:hover { background: #1dab53; border-color: #1dab53; }
+
+    /* ================================================
+       BADGES DE SEGMENTO (cítricas — exatas do DS)
+    ================================================ */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    .badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+    .b-metalurgia  { background: #eef6f5; color: var(--teal-700); }
+    .b-engenharia  { background: #eef8e7; color: #4d8a2e; }
+    .b-civil       { background: #fef0e6; color: #c25c1d; }
+    .b-industrial  { background: #fcebe9; color: #b22a20; }
+
+    /* ================================================
+       BLUEPRINT — padrão de grade técnica (exato do DS)
+    ================================================ */
+    .blueprint {
+      background-color: var(--teal-900);
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      color: var(--white);
+    }
+    .blueprint h1, .blueprint h2, .blueprint h3 { color: var(--white); }
+    .blueprint .eyebrow { color: var(--teal-400); }
+
+    /* ================================================
+       FACET-FRAME — assinatura visual (exata do DS)
+       3 camadas: foto PB · overlay diagonal multiply · cunha sólida esq.
+    ================================================ */
+    .facet-frame {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: var(--r-md);
+      background: var(--teal-900);
+    }
+    .facet-frame picture,
+    .facet-frame img {
+      position: absolute;
+      inset: 0;
       width: 100%;
-      height: var(--header-h);
-      z-index: 1000;
-      background: rgba(255,255,255,.96);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0,95,97,.08);
-      transition: box-shadow var(--transition);
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.05) brightness(.9);
     }
-    #header.scrolled { box-shadow: 0 4px 24px rgba(0,95,97,.12); }
+    /* Overlay diagonal — mix-blend-mode multiply */
+    .facet-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        115deg,
+        var(--teal-900) 0 38%,
+        transparent    38% 62%,
+        var(--teal-600) 62% 100%
+      );
+      mix-blend-mode: multiply;
+      opacity: .78;
+      z-index: 1;
+    }
+    /* Cunha sólida na borda esquerda */
+    .facet-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      clip-path: polygon(0 0, 32% 0, 18% 100%, 0 100%);
+      background: var(--teal-900);
+    }
+    /* Placeholder visual enquanto não há foto — hachura diagonal sutil */
+    .facet-frame .ff-placeholder {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient( 45deg, rgba(255,255,255,.035) 0 1px, transparent 1px 28px),
+        repeating-linear-gradient(-45deg, rgba(255,255,255,.035) 0 1px, transparent 1px 28px);
+    }
 
-    .nav-inner {
+    /* ================================================
+       HEADER FIXO
+    ================================================ */
+    #site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      z-index: 100;
+      background: rgba(255,255,255,.97);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--gray-100);
+      transition: box-shadow .2s ease;
+    }
+    #site-header.scrolled {
+      box-shadow: 0 2px 20px rgba(12,58,61,.10);
+    }
+    .header-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
       height: var(--header-h);
+      gap: var(--s3);
     }
 
-    /* LOGO ---------------------------------------- */
+    /* Logo no header */
     .nav-logo {
       display: flex;
       align-items: center;
+      gap: 10px;
       flex-shrink: 0;
-      transition: opacity var(--transition);
+      transition: opacity .15s;
     }
     .nav-logo:hover { opacity: .85; }
-    /* Tenta carregar o PNG; o SVG é exibido se o PNG não existir */
-    .nav-logo img {
-      height: 44px;
-      width: auto;
-      display: block;
+    .nav-logo .mark { width: 40px; height: 40px; }
+    .nav-logo .wordmark {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: .9rem;
+      color: var(--teal-900);
+      line-height: 1.25;
     }
-    .nav-logo .logo-svg-fallback { display: none; }
-    .nav-logo img.error + .logo-svg-fallback,
-    .nav-logo img[data-error] + .logo-svg-fallback { display: block; }
+    .nav-logo .wordmark small {
+      display: block;
+      font-weight: 400;
+      font-size: .74rem;
+      color: var(--gray-600);
+      letter-spacing: .01em;
+    }
 
-    /* NAV LINKS ------------------------------------ */
-    .nav-links {
+    /* Links do header */
+    nav.header-nav {
       display: flex;
       align-items: center;
-      gap: 32px;
+      gap: var(--s3);
     }
-    .nav-links a {
+    .header-nav a {
       font-size: .88rem;
       font-weight: 500;
-      color: var(--cgray);
+      color: var(--gray-600);
       position: relative;
-      padding-bottom: 4px;
-      transition: color var(--transition);
+      padding-bottom: 3px;
+      transition: color .15s;
     }
-    .nav-links a::after {
+    .header-nav a::after {
       content: '';
       position: absolute;
       bottom: 0; left: 0;
-      width: 0; height: 2px;
-      background: var(--p3272);
-      border-radius: 2px;
-      transition: width var(--transition);
+      width: 0; height: 1.5px;
+      background: var(--teal-600);
+      transition: width .2s ease;
     }
-    .nav-links a:hover,
-    .nav-links a.active { color: var(--primary); }
-    .nav-links a:hover::after,
-    .nav-links a.active::after { width: 100%; }
+    .header-nav a:hover { color: var(--teal-900); }
+    .header-nav a:hover::after { width: 100%; }
 
-    .nav-cta {
-      padding: 10px 22px;
-      font-size: .85rem;
-      border-radius: 100px;
-    }
-
-    /* HAMBURGER ------------------------------------ */
+    /* Hamburger */
     .hamburger {
       display: none;
       flex-direction: column;
       gap: 5px;
       padding: 6px;
-      z-index: 10;
     }
     .hamburger span {
       display: block;
-      width: 24px; height: 2px;
-      background: var(--primary);
+      width: 22px; height: 2px;
+      background: var(--teal-900);
       border-radius: 2px;
-      transition: transform var(--transition), opacity var(--transition);
+      transition: transform .2s, opacity .2s;
     }
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* MOBILE MENU ---------------------------------- */
-    .mobile-menu {
+    /* Menu mobile */
+    #mobile-nav {
       display: none;
       position: fixed;
       top: var(--header-h);
       left: 0; right: 0;
       background: var(--white);
-      padding: 20px 24px 32px;
-      box-shadow: var(--shadow-md);
+      border-bottom: 1px solid var(--gray-100);
+      padding: var(--s2) var(--s3) var(--s4);
       flex-direction: column;
       gap: 2px;
-      border-top: 1px solid rgba(0,95,97,.08);
+      box-shadow: 0 8px 24px rgba(12,58,61,.08);
+      z-index: 99;
     }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      font-size: 1rem;
+    #mobile-nav.open { display: flex; }
+    #mobile-nav a {
+      font-size: .97rem;
       font-weight: 500;
-      color: var(--dark);
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(0,95,97,.06);
-      transition: color var(--transition);
+      color: var(--ink-900);
+      padding: 11px 0;
+      border-bottom: 1px solid var(--gray-100);
     }
-    .mobile-menu a:hover { color: var(--primary); }
-    .mobile-menu .btn-primary { margin-top: 16px; border-radius: var(--radius); justify-content: center; }
+    #mobile-nav a:last-of-type { border-bottom: none; }
+    #mobile-nav .btn { margin-top: var(--s2); align-self: flex-start; }
 
-    /* =============================================
-       HERO – inspirado no Tasker
-       Fundo branco com gradients radiais suaves
-    ============================================= */
-    #hero {
-      padding-top: var(--header-h);
-      min-height: 100vh;
+    @media (max-width: 860px) {
+      .header-nav,
+      .header-cta { display: none; }
+      .hamburger   { display: flex; }
+    }
+
+    /* Empurra o main para baixo do header */
+    main { padding-top: var(--header-h); }
+
+    /* ================================================
+       1 · HERO
+    ================================================ */
+    .hero-section { padding: var(--s6) 0; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: var(--s4);
+      align-items: center;
+    }
+    @media (max-width: 860px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-grid .facet-frame { aspect-ratio: 16/9; order: -1; }
+    }
+
+    .hero-text h1 em {
+      font-style: normal;
+      color: var(--teal-400);
+    }
+    .hero-text .lede { color: rgba(255,255,255,.78); }
+
+    .hero-cta {
       display: flex;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      background:
-        radial-gradient(ellipse 65% 55% at 85% 15%, rgba(122,197,189,.28) 0%, transparent 65%),
-        radial-gradient(ellipse 55% 65% at 5%  85%, rgba(168,202,197,.22) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 40% at 60% 60%, rgba(0,175,160,.07) 0%, transparent 55%),
-        #FFFFFF;
-    }
-
-    /* Elementos decorativos de fundo */
-    .hero-grid-lines {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(0,95,97,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,95,97,.025) 1px, transparent 1px);
-      background-size: 60px 60px;
-      pointer-events: none;
-    }
-
-    .hero-inner {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      padding: 80px 0 60px;
-    }
-
-    .hero-content {
-      max-width: 700px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    /* Badge de destaque (como Tasker "Ranked #1") */
-    .hero-ranked {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--white);
-      border: 1.5px solid rgba(0,175,160,.3);
-      border-radius: 100px;
-      padding: 7px 16px;
-      font-size: .8rem;
-      font-weight: 600;
-      color: var(--p7717);
-      box-shadow: 0 2px 12px rgba(0,95,97,.08);
-      margin-bottom: 32px;
-    }
-    .hero-ranked-dot {
-      width: 8px; height: 8px;
-      background: var(--p3272);
-      border-radius: 50%;
-    }
-    .hero-ranked a {
-      color: var(--p3272);
-      font-weight: 700;
-      text-decoration: underline;
-      text-decoration-color: rgba(0,175,160,.4);
-    }
-
-    /* Título */
-    .hero-title {
-      font-size: clamp(2.6rem, 6vw, 4.2rem);
-      font-weight: 900;
-      color: var(--primary);
-      line-height: 1.08;
-      letter-spacing: -1.5px;
-      margin-bottom: 24px;
-    }
-    .hero-title .accent {
-      background: linear-gradient(135deg, var(--p7717) 0%, var(--p3272) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-sub {
-      font-size: 1.15rem;
-      font-weight: 400;
-      color: var(--cgray);
-      max-width: 520px;
-      margin: 0 auto 40px;
-      line-height: 1.75;
-    }
-
-    /* CTA group */
-    .hero-cta-group {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
+      gap: var(--s2);
       flex-wrap: wrap;
-      margin-bottom: 36px;
+      margin-top: var(--s3);
     }
-
-    /* Trust bar */
-    .hero-trust {
+    .hero-stat-row {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 24px;
+      gap: var(--s4);
+      margin-top: var(--s4);
       flex-wrap: wrap;
+      padding-top: var(--s3);
+      border-top: 1px solid rgba(255,255,255,.1);
     }
-    .trust-item {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-size: .82rem;
-      color: var(--cgray);
-      font-weight: 500;
+    .hero-stat {
+      font-family: var(--font-mono);
+      font-size: .76rem;
+      color: rgba(255,255,255,.55);
+      line-height: 1.4;
     }
-    .trust-item svg { color: var(--p3272); flex-shrink: 0; }
-
-    /* Floating labels (como Tasker "Guest" / "Pink Panther") */
-    .float-badge {
-      position: absolute;
-      background: var(--white);
-      border: 1.5px solid rgba(0,95,97,.15);
-      border-radius: var(--radius);
-      padding: 8px 14px;
-      font-size: .78rem;
-      font-weight: 700;
-      color: var(--primary);
-      box-shadow: 0 4px 16px rgba(0,95,97,.10);
-      white-space: nowrap;
-      pointer-events: none;
-      user-select: none;
-    }
-    .float-badge.left-1  { top: 28%; left: 4%;  animation: floatA 6s ease-in-out infinite; }
-    .float-badge.left-2  { bottom: 30%; left: 7%; animation: floatB 7s ease-in-out infinite; }
-    .float-badge.right-1 { top: 25%; right: 4%;  animation: floatC 5.5s ease-in-out infinite; }
-    .float-badge.right-2 { bottom: 28%; right: 6%; animation: floatA 8s ease-in-out infinite reverse; }
-
-    @keyframes floatA {
-      0%,100% { transform: translateY(0px); }
-      50%      { transform: translateY(-10px); }
-    }
-    @keyframes floatB {
-      0%,100% { transform: translateY(0px) rotate(-1deg); }
-      50%      { transform: translateY(-8px) rotate(1deg); }
-    }
-    @keyframes floatC {
-      0%,100% { transform: translateY(-4px); }
-      50%      { transform: translateY(6px); }
-    }
-
-    /* =============================================
-       STRIP DE NÚMEROS
-    ============================================= */
-    #strip {
-      background: var(--primary);
-      padding: 28px 0;
-    }
-    .strip-grid {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0;
-      flex-wrap: wrap;
-    }
-    .strip-stat {
-      flex: 1;
-      min-width: 150px;
-      text-align: center;
-      padding: 12px 24px;
-      border-right: 1px solid rgba(255,255,255,.12);
-    }
-    .strip-stat:last-child { border-right: none; }
-    .strip-stat strong {
+    .hero-stat b {
       display: block;
-      font-size: 2rem;
-      font-weight: 900;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
       color: var(--white);
-      line-height: 1;
-    }
-    .strip-stat span {
-      font-size: .78rem;
-      font-weight: 500;
-      color: var(--p563);
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      line-height: 1.1;
     }
 
-    /* =============================================
-       SERVIÇOS
-    ============================================= */
-    #servicos {
-      padding: 100px 0;
-      background: var(--white);
+    /* ================================================
+       2 · FAIXA DE CREDIBILIDADE
+    ================================================ */
+    .credibility-strip {
+      border-top:    1px solid var(--gray-100);
+      border-bottom: 1px solid var(--gray-100);
+      padding: var(--s4) 0;
     }
-    .services-head {
-      margin-bottom: 60px;
+    .credibility {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--s3);
     }
+    .credibility .client {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--gray-300);
+      letter-spacing: .02em;
+      transition: color .2s;
+    }
+    .credibility .client:hover { color: var(--teal-600); }
+
+    /* ================================================
+       3 · SERVIÇOS
+    ================================================ */
+    #servicos { background: var(--white); }
+
+    .services-intro { margin-bottom: var(--s5); }
+
     .services-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: var(--s3);
     }
+    @media (max-width: 860px) { .services-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .services-grid { grid-template-columns: 1fr; } }
 
-    .svc-card {
-      background: var(--white);
-      border: 1.5px solid rgba(0,95,97,.1);
-      border-radius: var(--radius-lg);
-      padding: 36px 30px 28px;
-      transition: all var(--transition);
+    .service-card {
+      border: 1px solid var(--gray-100);
+      border-radius: var(--r-md);
+      padding: var(--s3);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       position: relative;
       overflow: hidden;
+      transition: box-shadow .2s ease, transform .2s ease;
     }
-    .svc-card::after {
+    .service-card::before {
       content: '';
       position: absolute;
-      inset: 0;
-      border-radius: var(--radius-lg);
-      background: linear-gradient(135deg, rgba(0,175,160,.04) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity var(--transition);
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--accent);
     }
-    .svc-card:hover {
-      border-color: var(--p3272);
-      box-shadow: var(--shadow-md);
-      transform: translateY(-6px);
+    .service-card:hover {
+      box-shadow: 0 6px 28px rgba(12,58,61,.09);
+      transform: translateY(-3px);
     }
-    .svc-card:hover::after { opacity: 1; }
+    .service-card .num {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      color: var(--gray-400);
+    }
+    .service-card h3 { margin-bottom: 0; }
+    .service-card p {
+      font-size: .92rem;
+      color: #454d4d;
+      margin: 0;
+      line-height: 1.6;
+      flex: 1;
+    }
 
-    .svc-icon {
-      width: 52px; height: 52px;
-      background: rgba(0,175,160,.1);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      transition: background var(--transition);
+    /* CTA único ao final dos serviços */
+    .services-cta {
+      text-align: center;
+      margin-top: var(--s5);
+      padding-top: var(--s4);
+      border-top: 1px solid var(--gray-100);
     }
-    .svc-card:hover .svc-icon { background: rgba(0,175,160,.18); }
 
-    .svc-name {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 10px;
-    }
-    .svc-desc {
-      font-size: .9rem;
-      color: var(--cgray);
-      line-height: 1.7;
-      margin-bottom: 22px;
-    }
-    .svc-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: .83rem;
-      font-weight: 700;
-      color: var(--p3272);
-      transition: gap var(--transition), color var(--transition);
-    }
-    .svc-link:hover { gap: 10px; color: var(--primary); }
-
-    /* =============================================
-       SOBRE
-    ============================================= */
-    #sobre {
-      padding: 100px 0;
-      background: var(--bg-section);
-    }
-    .about-grid {
+    /* ================================================
+       4 · DIFERENCIAIS / COMO TRABALHAMOS
+    ================================================ */
+    .diff-layout {
       display: grid;
       grid-template-columns: 1fr 1.1fr;
-      gap: 72px;
-      align-items: center;
+      gap: var(--s5);
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .diff-layout { grid-template-columns: 1fr; gap: var(--s4); }
     }
 
-    /* Coluna visual */
-    .about-visual-wrap { position: relative; }
+    .diff-intro .lede { color: rgba(255,255,255,.72); margin-bottom: var(--s4); }
+    .diff-intro h2   { margin-bottom: var(--s2); }
 
-    .about-card-main {
-      background: var(--primary);
-      border-radius: var(--radius-lg);
-      padding: 48px 40px;
-      color: var(--white);
-      position: relative;
-      overflow: hidden;
-    }
-    .about-card-main::before {
-      content: '';
-      position: absolute;
-      top: -60px; right: -60px;
-      width: 220px; height: 220px;
-      background: rgba(0,175,160,.2);
-      border-radius: 50%;
-    }
-    .about-card-main::after {
-      content: '';
-      position: absolute;
-      bottom: -40px; left: -40px;
-      width: 150px; height: 150px;
-      background: rgba(122,197,189,.12);
-      border-radius: 50%;
-    }
-
-    .about-card-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      margin-bottom: 6px;
-      position: relative;
-      z-index: 1;
-    }
-    .about-card-sub {
-      font-size: .82rem;
-      color: var(--p563);
-      margin-bottom: 32px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .mvv-list { display: flex; flex-direction: column; gap: 18px; position: relative; z-index: 1; }
-    .mvv-item { display: flex; gap: 12px; }
-    .mvv-dot {
-      width: 8px; height: 8px;
-      background: var(--p3272);
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-top: 6px;
-    }
-    .mvv-item strong {
-      display: block;
-      font-size: .85rem;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 2px;
-    }
-    .mvv-item span {
-      font-size: .82rem;
-      color: rgba(255,255,255,.55);
-    }
-
-    /* Badge flutuante */
-    .about-float-badge {
-      position: absolute;
-      bottom: -20px; right: -20px;
-      background: var(--p3272);
-      color: var(--white);
-      border-radius: var(--radius);
-      padding: 18px 22px;
-      text-align: center;
-      box-shadow: var(--shadow-lg);
-    }
-    .about-float-badge strong {
-      display: block;
-      font-size: 2.2rem;
-      font-weight: 900;
-      line-height: 1;
-    }
-    .about-float-badge span { font-size: .75rem; opacity: .85; }
-
-    /* Coluna texto */
-    .about-text .section-sub { margin-bottom: 24px; }
-    .about-body {
-      font-size: .96rem;
-      color: #555;
-      line-height: 1.78;
-      margin-bottom: 14px;
-    }
-    .check-list { display: flex; flex-direction: column; gap: 10px; margin: 24px 0 36px; }
-    .check-item {
+    .diff-list {
       display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: .92rem;
-      font-weight: 500;
-      color: var(--dark);
+      flex-direction: column;
+      gap: var(--s2);
     }
-    .check-item svg { color: var(--p3272); flex-shrink: 0; }
-
-    /* =============================================
-       CLIENTES
-    ============================================= */
-    #clientes {
-      padding: 88px 0;
-      background: var(--white);
-    }
-    .clients-head {
-      text-align: center;
-      margin-bottom: 56px;
-    }
-    .clients-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 18px;
-    }
-    .client-pill {
-      background: var(--white);
-      border: 1.5px solid rgba(0,95,97,.12);
-      border-radius: 100px;
-      padding: 16px 36px;
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--p7718);
-      letter-spacing: .5px;
-      box-shadow: var(--shadow-sm);
-      transition: all var(--transition);
-    }
-    .client-pill:hover {
-      border-color: var(--p3272);
-      color: var(--primary);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
-
-    /* =============================================
-       CONTATO
-    ============================================= */
-    #contato {
-      padding: 100px 0;
-      background: var(--primary);
-      position: relative;
-      overflow: hidden;
-    }
-    #contato::before {
-      content: '';
-      position: absolute;
-      top: -100px; right: -100px;
-      width: 500px; height: 500px;
-      border: 80px solid rgba(0,175,160,.1);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    #contato::after {
-      content: '';
-      position: absolute;
-      bottom: -80px; left: -80px;
-      width: 380px; height: 380px;
-      border: 60px solid rgba(122,197,189,.08);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .contato-grid {
+    .diff-item {
       display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 72px;
-      position: relative;
-      z-index: 2;
+      grid-template-columns: 28px 1fr;
+      gap: var(--s2);
+      padding: var(--s3);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--r-md);
+      background: rgba(255,255,255,.04);
+    }
+    .diff-num {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--teal-400);
+      padding-top: 3px;
+    }
+    .diff-item h3 { color: var(--white); font-size: 1rem; margin-bottom: 4px; }
+    .diff-item p  { font-size: .88rem; color: rgba(255,255,255,.58); margin: 0; line-height: 1.55; }
+
+    /* ================================================
+       5 · CONTATO
+    ================================================ */
+    #contato { background: var(--gray-100); }
+
+    .contato-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s5);
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .contato-layout { grid-template-columns: 1fr; gap: var(--s4); }
     }
 
-    /* Info lado esquerdo */
-    .contato-info .section-title { color: var(--white); }
-    .contato-info .section-title::after { background: var(--p3272); }
-    .contato-info .section-sub { color: rgba(255,255,255,.6); margin-bottom: 36px; }
+    .contato-info .lede { margin-bottom: var(--s4); }
 
-    .contact-items { display: flex; flex-direction: column; gap: 22px; }
-    .contact-item { display: flex; align-items: flex-start; gap: 16px; }
+    .contact-items { display: flex; flex-direction: column; gap: var(--s3); }
+    .contact-item  { display: flex; align-items: flex-start; gap: var(--s2); }
+
     .contact-icon {
-      width: 44px; height: 44px;
-      background: rgba(255,255,255,.1);
-      border-radius: var(--radius);
+      width: 40px; height: 40px;
+      background: var(--teal-900);
+      border-radius: var(--r-sm);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      color: var(--white);
     }
-    .contact-label {
-      font-size: .74rem;
-      font-weight: 700;
-      letter-spacing: 1px;
+    .contact-text strong {
+      font-family: var(--font-mono);
+      font-size: .68rem;
+      letter-spacing: .08em;
       text-transform: uppercase;
-      color: var(--p3272);
+      color: var(--teal-700);
+      display: block;
       margin-bottom: 3px;
     }
-    .contact-value {
+    .contact-text span,
+    .contact-text a {
       font-size: .95rem;
-      color: rgba(255,255,255,.82);
+      color: var(--ink-900);
+      line-height: 1.5;
     }
-    .contact-value a { transition: color var(--transition); }
-    .contact-value a:hover { color: var(--white); text-decoration: underline; }
+    .contact-text a:hover { color: var(--teal-600); }
 
-    .wa-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 36px;
-      background: #25D366;
+    /* Card de ação */
+    .contato-cta-card {
+      background: var(--teal-900);
+      border-radius: var(--r-md);
+      padding: var(--s4);
       color: var(--white);
-      padding: 14px 26px;
-      border-radius: 100px;
-      font-weight: 700;
-      font-size: .93rem;
-      box-shadow: 0 4px 20px rgba(37,211,102,.35);
-      transition: all var(--transition);
     }
-    .wa-btn:hover {
-      background: #1fb858;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(37,211,102,.45);
-    }
-
-    /* Formulário */
-    .form-card {
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      padding: 44px 40px;
-      box-shadow: var(--shadow-lg);
-    }
-    .form-card-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 4px;
-    }
-    .form-card-sub {
-      font-size: .86rem;
-      color: var(--cgray);
-      margin-bottom: 28px;
-    }
-
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .form-group { margin-bottom: 16px; }
-    .form-group label {
-      display: block;
-      font-size: .75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .7px;
-      color: var(--p7718);
-      margin-bottom: 6px;
-    }
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1.5px solid rgba(0,95,97,.15);
-      border-radius: var(--radius);
-      font-family: inherit;
-      font-size: .93rem;
-      color: var(--dark);
-      background: var(--white);
-      outline: none;
-      transition: border-color var(--transition), box-shadow var(--transition);
-      appearance: none;
-    }
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
-      border-color: var(--p3272);
-      box-shadow: 0 0 0 3px rgba(0,175,160,.12);
-    }
-    .form-group input.is-error,
-    .form-group textarea.is-error { border-color: #e53e3e; }
-    .field-error {
-      display: none;
-      font-size: .76rem;
-      color: #e53e3e;
-      margin-top: 4px;
-    }
-    .field-error.show { display: block; }
-    .form-group textarea { resize: vertical; min-height: 108px; }
-
-    .form-submit {
-      width: 100%;
-      padding: 14px;
-      background: var(--primary);
-      color: var(--white);
-      font-size: .97rem;
-      font-weight: 700;
-      border-radius: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all var(--transition);
-    }
-    .form-submit:hover {
-      background: var(--p7717);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,95,97,.3);
-    }
-    .form-success {
-      display: none;
-      text-align: center;
-      padding: 18px;
-      background: rgba(0,175,160,.1);
-      border: 1.5px solid rgba(0,175,160,.3);
-      border-radius: var(--radius);
-      color: var(--p7717);
-      font-weight: 600;
+    .contato-cta-card .eyebrow { color: var(--teal-400); }
+    .contato-cta-card h3 { color: var(--white); font-size: 1.3rem; margin-bottom: var(--s2); }
+    .contato-cta-card .desc {
       font-size: .92rem;
-      margin-top: 14px;
+      color: rgba(255,255,255,.65);
+      margin-bottom: var(--s3);
+      line-height: 1.6;
     }
-    .form-success.show { display: block; }
-
-    /* =============================================
-       FOOTER
-    ============================================= */
-    #footer {
-      background: #0E1A1A;
-      padding: 64px 0 28px;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 48px;
-      padding-bottom: 40px;
-      border-bottom: 1px solid rgba(255,255,255,.07);
-    }
-    .footer-brand .nav-logo img,
-    .footer-brand .logo-svg-fallback { filter: brightness(0) invert(1); opacity: .9; }
-
-    .footer-desc {
-      font-size: .87rem;
+    .contato-cta-card .footnote {
+      font-size: .78rem;
       color: rgba(255,255,255,.35);
-      line-height: 1.75;
-      margin-top: 18px;
-      max-width: 280px;
+      margin-top: var(--s2);
     }
-    .footer-col-title {
-      font-size: .73rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
+
+    /* ================================================
+       6 · RODAPÉ — textura do ícone (exata do DS)
+    ================================================ */
+    #site-footer {
+      background: var(--ink-900);
+      color: rgba(255,255,255,.8);
+      position: relative;
+      overflow: hidden;
+    }
+    .footer-tex {
+      position: absolute;
+      inset: 0;
+      opacity: .06;
+      background-image:
+        repeating-linear-gradient( 60deg, transparent 0 14px, #fff 14px 16px),
+        repeating-linear-gradient(-60deg, transparent 0 14px, #fff 14px 16px);
+      pointer-events: none;
+    }
+    .footer-inner { position: relative; z-index: 1; }
+
+    /* Faixa de clientes no topo do footer */
+    .footer-clients {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--s3);
+      padding: var(--s4) 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .footer-clients .client { color: rgba(255,255,255,.35); }
+
+    /* Colunas do footer */
+    .footer-cols {
+      display: grid;
+      grid-template-columns: 1.3fr .8fr .8fr;
+      gap: var(--s4);
+      padding: var(--s5) 0 var(--s4);
+    }
+    @media (max-width: 760px) {
+      .footer-cols { grid-template-columns: 1fr; gap: var(--s4); }
+    }
+    .footer-cols h4 {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      letter-spacing: .1em;
       text-transform: uppercase;
-      color: var(--p3272);
-      margin-bottom: 18px;
+      color: var(--white);
+      margin-bottom: 14px;
     }
-    .footer-links { display: flex; flex-direction: column; gap: 10px; }
-    .footer-links a {
+    .footer-cols p {
       font-size: .87rem;
-      color: rgba(255,255,255,.42);
-      transition: color var(--transition);
+      color: rgba(255,255,255,.45);
+      line-height: 1.65;
+      max-width: 280px;
+      margin-top: var(--s2);
     }
-    .footer-links a:hover { color: rgba(255,255,255,.85); }
+    .footer-cols a {
+      display: block;
+      font-size: .88rem;
+      color: rgba(255,255,255,.55);
+      margin-bottom: 8px;
+      transition: color .15s;
+      line-height: 1.5;
+    }
+    .footer-cols a:hover { color: var(--white); }
+
+    /* Barra de copyright */
     .footer-bottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 24px;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: var(--s2);
+      padding: var(--s3) 0;
+      border-top: 1px solid rgba(255,255,255,.07);
+      font-size: .8rem;
+      color: rgba(255,255,255,.28);
     }
-    .footer-copy { font-size: .8rem; color: rgba(255,255,255,.25); }
-    .footer-tel  { font-size: .85rem; color: rgba(255,255,255,.38); }
-    .footer-tel a { color: var(--p3272); font-weight: 600; }
 
-    /* =============================================
+    /* ================================================
        WHATSAPP FLUTUANTE
-    ============================================= */
+    ================================================ */
     .wa-float {
       position: fixed;
       bottom: 28px; right: 28px;
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .wa-float-tooltip {
-      background: var(--white);
-      border: 1.5px solid rgba(0,95,97,.1);
-      color: var(--primary);
-      font-size: .8rem;
-      font-weight: 700;
-      padding: 8px 14px;
-      border-radius: 100px;
-      box-shadow: var(--shadow-md);
-      white-space: nowrap;
-      opacity: 0;
-      transform: translateX(8px);
-      transition: opacity var(--transition), transform var(--transition);
-      pointer-events: none;
-    }
-    .wa-float:hover .wa-float-tooltip { opacity: 1; transform: translateX(0); }
-    .wa-float-btn {
-      width: 58px; height: 58px;
+      z-index: 200;
+      width: 56px; height: 56px;
       background: #25D366;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 20px rgba(37,211,102,.45);
-      transition: transform var(--transition), box-shadow var(--transition);
-      flex-shrink: 0;
-      position: relative;
+      box-shadow: 0 4px 16px rgba(37,211,102,.4);
+      transition: transform .2s, box-shadow .2s;
     }
-    .wa-float-btn:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(37,211,102,.55); }
-    .wa-float-btn::before {
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 24px rgba(37,211,102,.5);
+    }
+    .wa-float::before {
       content: '';
       position: absolute;
       width: 100%; height: 100%;
@@ -994,767 +752,541 @@
     }
     @keyframes wa-ping {
       0%   { transform: scale(1);   opacity: .8; }
-      70%  { transform: scale(1.65); opacity: 0; }
-      100% { transform: scale(1.65); opacity: 0; }
+      70%  { transform: scale(1.7); opacity: 0;  }
+      100% { transform: scale(1.7); opacity: 0;  }
     }
 
-    /* Scroll top */
-    .scroll-top {
-      position: fixed;
-      bottom: 100px; right: 30px;
-      width: 40px; height: 40px;
-      background: var(--p7717);
-      border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      z-index: 998;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(8px);
-      transition: all var(--transition);
-    }
-    .scroll-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
-    .scroll-top:hover { background: var(--primary); }
-
-    /* =============================================
-       RESPONSIVE
-    ============================================= */
-    @media (max-width: 1024px) {
-      .services-grid { grid-template-columns: repeat(2,1fr); }
-      .about-grid    { gap: 48px; }
-      .footer-grid   { grid-template-columns: 1fr 1fr; }
-      .footer-brand  { grid-column: span 2; }
-      .float-badge.left-1, .float-badge.left-2,
-      .float-badge.right-1, .float-badge.right-2 { display: none; }
+    /* ================================================
+       ACESSIBILIDADE — classe de conteúdo oculto
+    ================================================ */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
     }
 
-    @media (max-width: 768px) {
-      .nav-links, .nav-cta { display: none; }
-      .hamburger { display: flex; }
-
-      .hero-title { letter-spacing: -.5px; }
-      .hero-cta-group { flex-direction: column; align-items: center; }
-      .hero-cta-group .btn { width: 100%; max-width: 300px; justify-content: center; }
-
-      .services-grid { grid-template-columns: 1fr; }
-
-      .about-grid    { grid-template-columns: 1fr; }
-      .about-visual-wrap { order: -1; }
-      .about-float-badge { bottom: -10px; right: 0; }
-
-      .contato-grid  { grid-template-columns: 1fr; gap: 40px; }
-      .form-card     { padding: 32px 22px; }
-      .form-row      { grid-template-columns: 1fr; }
-
-      .footer-grid   { grid-template-columns: 1fr; }
-      .footer-brand  { grid-column: span 1; }
-
-      .strip-grid    { flex-direction: row; gap: 0; }
-      .strip-stat    { padding: 10px 16px; }
-      .strip-stat strong { font-size: 1.6rem; }
-    }
-
-    @media (max-width: 480px) {
-      .strip-grid { gap: 0; }
-      .strip-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,.12); }
-      .strip-stat:last-child { border-bottom: none; }
-      .wa-float { bottom: 20px; right: 18px; }
+    /* ================================================
+       UTILITÁRIOS
+    ================================================ */
+    @media (max-width: 560px) {
+      .hero-cta { flex-direction: column; }
+      .hero-cta .btn { width: 100%; justify-content: center; }
+      .wa-float { bottom: 20px; right: 20px; }
       .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ===========================================
-       HEADER – fixo, branco
-  =========================================== -->
-  <header id="header">
-    <div class="container">
-      <nav class="nav-inner">
+  <!-- ============================================================
+       1 · HEADER FIXO
+       Logo SVG inline (paths extraídos do designsystem.html)
+       CTA principal = WhatsApp wa.me
+  ============================================================ -->
+  <header id="site-header">
+    <div class="wrap">
+      <div class="header-inner">
 
-        <!-- LOGO
-             Coloque o arquivo LogoPNG_28x15.png (ou logo.png) na raiz do projeto.
-             O SVG abaixo é exibido como fallback caso o PNG não seja encontrado.
-        -->
-        <a href="#hero" class="nav-logo" aria-label="Metalúrgica Paranaguá – Início">
-          <img
-            src="logo.png"
-            alt="Metalúrgica Paranaguá"
-            height="44"
-            onerror="this.setAttribute('data-error','1'); this.style.display='none'; this.nextElementSibling.style.display='flex';"
-          />
-          <!-- SVG fallback baseado na identidade visual -->
-          <svg class="logo-svg-fallback" style="display:none" height="44" viewBox="0 0 260 110" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <!-- Quadro -->
-            <rect x="3" y="3" width="88" height="88" stroke="#005F61" stroke-width="5.5"/>
-            <!-- M geométrico (estilizado) -->
-            <path d="M14 86 L14 22 L44 60 L74 22 L74 86" stroke="#005F61" stroke-width="11" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
-            <!-- P (sobrepõe borda direita) -->
-            <line x1="80" y1="86" x2="80" y2="18" stroke="#007E79" stroke-width="10" stroke-linecap="round"/>
-            <path d="M80 18 Q115 18 115 44 Q115 70 80 70" stroke="#007E79" stroke-width="9" stroke-linecap="round" fill="none"/>
-            <!-- Texto -->
-            <text x="128" y="50" font-family="Roboto,sans-serif" font-weight="800" font-size="24" fill="#005F61">Metalúrgica</text>
-            <text x="128" y="80" font-family="Roboto,sans-serif" font-weight="800" font-size="24" fill="#005F61">Paranaguá</text>
+        <!-- Logo: marca SVG inline + wordmark em texto -->
+        <a href="#inicio" class="nav-logo" aria-label="Metalúrgica Paranaguá — ir ao início da página">
+          <svg class="mark" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"
+               aria-hidden="true" focusable="false">
+            <rect x="20" y="20" width="200" height="200"
+                  fill="none" stroke="var(--teal-900)" stroke-width="6"/>
+            <polygon points="42,92 72,70 72,168 42,140"   fill="var(--teal-900)"/>
+            <polygon points="72,72 130,72 102,205"         fill="var(--teal-900)"/>
+            <rect x="132" y="42" width="28" height="58"    fill="var(--teal-600)"/>
+            <path d="M132,92 A58,58 0 0 1 132,208 L132,178 A28,28 0 0 0 132,122 Z"
+                  fill="var(--teal-600)"/>
           </svg>
+          <div class="wordmark">
+            Metalúrgica Paranaguá
+            <small>Engenharia &amp; Fabricação Industrial</small>
+          </div>
         </a>
 
-        <!-- Links -->
-        <ul class="nav-links" role="navigation" aria-label="Menu principal">
-          <li><a href="#hero"     class="active">Home</a></li>
-          <li><a href="#servicos">Serviços</a></li>
-          <li><a href="#sobre">Sobre</a></li>
-          <li><a href="#clientes">Clientes</a></li>
-          <li><a href="#contato">Contato</a></li>
-        </ul>
+        <!-- Nav desktop -->
+        <nav class="header-nav" aria-label="Menu principal">
+          <a href="#servicos">Serviços</a>
+          <a href="#diferenciais">Como trabalhamos</a>
+          <a href="#clientes">Clientes</a>
+          <a href="#contato">Contato</a>
+        </nav>
 
-        <a href="#contato" class="btn btn-primary nav-cta" aria-label="Solicitar orçamento">Solicitar Orçamento</a>
-
-        <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </nav>
-
-      <!-- Menu mobile -->
-      <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Menu mobile">
-        <a href="#hero">Home</a>
-        <a href="#servicos">Serviços</a>
-        <a href="#sobre">Sobre</a>
-        <a href="#clientes">Clientes</a>
-        <a href="#contato">Contato</a>
-        <a href="#contato" class="btn btn-primary">Solicitar Orçamento</a>
-      </div>
-    </div>
-  </header>
-
-  <!-- ===========================================
-       HERO – estilo moderno inspirado no Tasker
-  =========================================== -->
-  <section id="hero">
-    <div class="hero-grid-lines" aria-hidden="true"></div>
-
-    <!-- Floating badges industriais -->
-    <div class="float-badge left-1"  aria-hidden="true">⚙ Usinagem CNC</div>
-    <div class="float-badge left-2"  aria-hidden="true">🔩 ISO 9001</div>
-    <div class="float-badge right-1" aria-hidden="true">🚢 Porto de Paranaguá</div>
-    <div class="float-badge right-2" aria-hidden="true">+30 anos de experiência</div>
-
-    <div class="container">
-      <div class="hero-inner">
-        <div class="hero-content">
-
-          <!-- Badge topo (como "Ranked #1" do Tasker) -->
-          <div class="hero-ranked">
-            <div class="hero-ranked-dot"></div>
-            Referência em metalurgia no litoral do Paraná
-          </div>
-
-          <!-- Título grande -->
-          <h1 class="hero-title">
-            Soluções sob Medida em<br>
-            <span class="accent">Mecânica Industrial</span>
-          </h1>
-
-          <p class="hero-sub">
-            Engenharia, fabricação e serviços especializados para a indústria.
-            Do projeto à entrega, com precisão e comprometimento.
-          </p>
-
-          <!-- CTAs -->
-          <div class="hero-cta-group">
-            <a href="#contato" class="btn btn-primary">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              Fale com a gente
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-            <a href="#servicos" class="btn btn-outline">
-              Nossos Serviços
-            </a>
-          </div>
-
-          <!-- Trust bar (como "No credit card required" do Tasker) -->
-          <div class="hero-trust">
-            <div class="trust-item">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              Equipe técnica própria
-            </div>
-            <div class="trust-item">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              Orçamento sem compromisso
-            </div>
-            <div class="trust-item">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              Atendimento ágil via WhatsApp
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Strip de estatísticas -->
-  <div id="strip" aria-label="Números da empresa">
-    <div class="container">
-      <div class="strip-grid">
-        <div class="strip-stat">
-          <strong>+30</strong>
-          <span>Anos de mercado</span>
-        </div>
-        <div class="strip-stat">
-          <strong>+500</strong>
-          <span>Projetos entregues</span>
-        </div>
-        <div class="strip-stat">
-          <strong>5</strong>
-          <span>Clientes âncora</span>
-        </div>
-        <div class="strip-stat">
-          <strong>100%</strong>
-          <span>Equipe própria</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===========================================
-       SERVIÇOS
-  =========================================== -->
-  <section id="servicos">
-    <div class="container">
-      <div class="services-head">
-        <div class="section-label">O que fazemos</div>
-        <h2 class="section-title">Nossos Serviços</h2>
-        <p class="section-sub" style="max-width:520px;">
-          Soluções industriais completas, da concepção ao acabamento, com excelência técnica e comprometimento em cada etapa.
-        </p>
-      </div>
-
-      <div class="services-grid">
-
-        <!-- 1 -->
-        <article class="svc-card">
-          <div class="svc-icon" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00AFA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-            </svg>
-          </div>
-          <h3 class="svc-name">Engenharia e Projeto</h3>
-          <p class="svc-desc">
-            Desenvolvimento de projetos mecânicos e estruturais sob medida com CAD/CAM de última geração. Transformamos especificações técnicas em soluções viáveis, seguras e economicamente eficientes para cada aplicação industrial.
-          </p>
-          <a href="#contato" class="svc-link">
-            Saiba mais
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </article>
-
-        <!-- 2 -->
-        <article class="svc-card">
-          <div class="svc-icon" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00AFA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
-            </svg>
-          </div>
-          <h3 class="svc-name">Fabricação e Usinagem</h3>
-          <p class="svc-desc">
-            Fabricação de peças e componentes metálicos com alta precisão dimensional em tornos CNC, fresadoras e equipamentos de corte modernos. Aço carbono, inox e ligas especiais para as demandas mais exigentes da indústria.
-          </p>
-          <a href="#contato" class="svc-link">
-            Saiba mais
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </article>
-
-        <!-- 3 -->
-        <article class="svc-card">
-          <div class="svc-icon" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00AFA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-            </svg>
-          </div>
-          <h3 class="svc-name">Montagem Industrial</h3>
-          <p class="svc-desc">
-            Montagens eletromecânicas, estruturas metálicas e equipamentos industriais em campo ou em oficina. Equipe técnica qualificada para montagens seguras dentro do prazo e conforme normas vigentes.
-          </p>
-          <a href="#contato" class="svc-link">
-            Saiba mais
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </article>
-
-        <!-- 4 -->
-        <article class="svc-card">
-          <div class="svc-icon" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00AFA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
-            </svg>
-          </div>
-          <h3 class="svc-name">Jateamento e Pintura</h3>
-          <p class="svc-desc">
-            Tratamento de superfícies com jateamento abrasivo e sistemas de pintura anticorrosiva (SSPC/NACE). Aderência, durabilidade e proteção ideais para o ambiente industrial e portuário agressivo de Paranaguá.
-          </p>
-          <a href="#contato" class="svc-link">
-            Saiba mais
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </article>
-
-        <!-- 5 -->
-        <article class="svc-card">
-          <div class="svc-icon" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00AFA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-            </svg>
-          </div>
-          <h3 class="svc-name">Manutenção Industrial</h3>
-          <p class="svc-desc">
-            Manutenção preventiva e corretiva em equipamentos, estruturas e instalações industriais. Atuamos com agilidade para minimizar paradas não programadas e prolongar a vida útil dos ativos das empresas clientes.
-          </p>
-          <a href="#contato" class="svc-link">
-            Saiba mais
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </article>
-
-        <!-- 6 -->
-        <article class="svc-card">
-          <div class="svc-icon" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00AFA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
-            </svg>
-          </div>
-          <h3 class="svc-name">Aluguel de Equipamentos</h3>
-          <p class="svc-desc">
-            Locação de equipamentos industriais — andaimes, plataformas elevatórias, ferramentas especiais — com suporte técnico e operadores qualificados. Flexibilidade para projetos pontuais ou contratos de longa duração.
-          </p>
-          <a href="#contato" class="svc-link">
-            Saiba mais
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ===========================================
-       SOBRE
-  =========================================== -->
-  <section id="sobre">
-    <div class="container">
-      <div class="about-grid">
-
-        <!-- Visual -->
-        <div class="about-visual-wrap">
-          <div class="about-card-main">
-            <div class="about-card-title">Nossa Essência</div>
-            <div class="about-card-sub">O que nos move a cada projeto</div>
-            <ul class="mvv-list" aria-label="Missão, Visão e Valores">
-              <li class="mvv-item">
-                <div class="mvv-dot"></div>
-                <div>
-                  <strong>Missão</strong>
-                  <span>Oferecer soluções industriais de excelência, com segurança, qualidade e respeito aos prazos.</span>
-                </div>
-              </li>
-              <li class="mvv-item">
-                <div class="mvv-dot"></div>
-                <div>
-                  <strong>Visão</strong>
-                  <span>Ser referência em serviços metalúrgicos e de engenharia no Litoral do Paraná.</span>
-                </div>
-              </li>
-              <li class="mvv-item">
-                <div class="mvv-dot"></div>
-                <div>
-                  <strong>Valores</strong>
-                  <span>Ética, comprometimento, inovação contínua e valorização das pessoas.</span>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="about-float-badge" aria-label="Mais de 30 anos">
-            <strong>+30</strong>
-            <span>anos de<br>experiência</span>
-          </div>
-        </div>
-
-        <!-- Texto -->
-        <div class="about-text">
-          <div class="section-label">Quem somos</div>
-          <h2 class="section-title">Sobre a Metalúrgica Paranaguá</h2>
-          <p class="section-sub" style="margin-bottom:24px;">
-            Tradição e inovação a serviço da indústria paranaense.
-          </p>
-          <p class="about-body">
-            Fundada em Paranaguá, no coração do maior complexo portuário da América do Sul, a Metalúrgica Paranaguá LTDA nasceu para atender a demanda crescente por serviços industriais de alta qualidade na região. Em mais de três décadas de atuação, construímos uma trajetória sólida baseada na entrega consistente de resultados.
-          </p>
-          <p class="about-body">
-            Atendemos grandes empresas do agronegócio, petroquímica e logística portuária com equipe própria, equipamentos modernos e rigoroso controle de qualidade. Nossa estrutura integrada — da concepção ao acabamento — nos permite assumir projetos complexos entregando-os dentro do prazo e orçamento.
-          </p>
-          <ul class="check-list" aria-label="Diferenciais">
-            <li class="check-item">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              Equipe técnica própria e altamente qualificada
-            </li>
-            <li class="check-item">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              Oficina completa com maquinário de precisão CNC
-            </li>
-            <li class="check-item">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              Histórico comprovado com clientes líderes de mercado
-            </li>
-            <li class="check-item">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              Segurança do trabalho como prioridade absoluta
-            </li>
-          </ul>
-          <a href="#contato" class="btn btn-primary">Entre em contato</a>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ===========================================
-       CLIENTES
-  =========================================== -->
-  <section id="clientes">
-    <div class="container">
-      <div class="clients-head">
-        <div class="section-label" style="text-align:center">Portfólio de clientes</div>
-        <h2 class="section-title centered">Empresas que confiam<br>em nosso trabalho</h2>
-        <p class="section-sub centered" style="margin-top:8px;max-width:480px;">
-          Atendemos as maiores operações industriais e portuárias do litoral paranaense.
-        </p>
-      </div>
-      <div class="clients-row" role="list" aria-label="Clientes">
-        <div class="client-pill" role="listitem">Bunge</div>
-        <div class="client-pill" role="listitem">Yara</div>
-        <div class="client-pill" role="listitem">Petrobras</div>
-        <div class="client-pill" role="listitem">TCP</div>
-        <div class="client-pill" role="listitem">Mosaic</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===========================================
-       CONTATO
-  =========================================== -->
-  <section id="contato">
-    <div class="container">
-      <div class="contato-grid">
-
-        <!-- Informações -->
-        <div class="contato-info">
-          <div class="section-label" style="color:var(--p563)">Fale conosco</div>
-          <h2 class="section-title">Vamos resolver<br>juntos</h2>
-          <p class="section-sub">
-            Estamos prontos para entender seu desafio e apresentar a melhor solução industrial para o seu negócio.
-          </p>
-
-          <div class="contact-items">
-            <div class="contact-item">
-              <div class="contact-icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.64 3.27 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.77-.77a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              </div>
-              <div>
-                <div class="contact-label">Telefone / WhatsApp</div>
-                <div class="contact-value">
-                  <a href="https://wa.me/554134226670" target="_blank" rel="noopener noreferrer">(41) 3422-6670</a>
-                </div>
-              </div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              </div>
-              <div>
-                <div class="contact-label">E-mail</div>
-                <div class="contact-value">
-                  <a href="mailto:contato@metalurgicaparanagua.com.br">contato@metalurgicaparanagua.com.br</a>
-                </div>
-              </div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              </div>
-              <div>
-                <div class="contact-label">Localização</div>
-                <div class="contact-value">Paranaguá, Paraná – Brasil</div>
-              </div>
-            </div>
-          </div>
-
-          <a
-            href="https://wa.me/554134226670?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento."
-            target="_blank"
-            rel="noopener noreferrer"
-            class="wa-btn"
-            aria-label="Chamar no WhatsApp"
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <!-- CTA desktop -->
+        <div class="header-cta">
+          <a href="https://wa.me/554134226670?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento."
+             class="btn btn-primary"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="Abrir WhatsApp para solicitar orçamento">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
             </svg>
-            Chamar no WhatsApp
+            WhatsApp
           </a>
         </div>
 
-        <!-- Formulário -->
-        <div class="form-card">
-          <div class="form-card-title">Solicite um Orçamento</div>
-          <div class="form-card-sub">Preencha abaixo — retornamos em até 24h.</div>
-
-          <form id="contactForm" novalidate>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="nome">Nome *</label>
-                <input type="text" id="nome" name="nome" placeholder="Seu nome completo" autocomplete="name" />
-                <div class="field-error" id="nome-err">Informe seu nome.</div>
-              </div>
-              <div class="form-group">
-                <label for="empresa">Empresa</label>
-                <input type="text" id="empresa" name="empresa" placeholder="Nome da empresa" />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="email">E-mail *</label>
-                <input type="email" id="email" name="email" placeholder="email@empresa.com" autocomplete="email" />
-                <div class="field-error" id="email-err">E-mail inválido.</div>
-              </div>
-              <div class="form-group">
-                <label for="tel">Telefone *</label>
-                <input type="tel" id="tel" name="tel" placeholder="(00) 00000-0000" autocomplete="tel" />
-                <div class="field-error" id="tel-err">Informe seu telefone.</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="servico">Serviço de interesse</label>
-              <select id="servico" name="servico">
-                <option value="">Selecione um serviço...</option>
-                <option value="engenharia">Engenharia e Projeto</option>
-                <option value="fabricacao">Fabricação e Usinagem</option>
-                <option value="montagem">Montagem Industrial</option>
-                <option value="jateamento">Jateamento e Pintura</option>
-                <option value="manutencao">Manutenção Industrial</option>
-                <option value="aluguel">Aluguel de Equipamentos</option>
-                <option value="outro">Outro</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="msg">Mensagem *</label>
-              <textarea id="msg" name="msg" placeholder="Descreva o que você precisa..."></textarea>
-              <div class="field-error" id="msg-err">Escreva sua mensagem.</div>
-            </div>
-            <button type="submit" class="form-submit">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-              Enviar Mensagem
-            </button>
-            <div class="form-success" id="formOk" role="alert">
-              ✓ Mensagem enviada! Entraremos em contato em breve.
-            </div>
-          </form>
-        </div>
-
+        <!-- Botão hamburguer (mobile) -->
+        <button class="hamburger" id="hamburger"
+                aria-label="Abrir menu de navegação"
+                aria-expanded="false"
+                aria-controls="mobile-nav">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
-  </section>
 
-  <!-- ===========================================
-       FOOTER
-  =========================================== -->
-  <footer id="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <!-- Marca -->
-        <div class="footer-brand">
-          <a href="#hero" class="nav-logo" aria-label="Voltar ao topo">
-            <img
-              src="logo.png"
-              alt="Metalúrgica Paranaguá"
-              height="40"
-              onerror="this.setAttribute('data-error','1'); this.style.display='none'; this.nextElementSibling.style.display='flex';"
-            />
-            <svg class="logo-svg-fallback" style="display:none;filter:brightness(0) invert(1);opacity:.85" height="40" viewBox="0 0 260 110" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="3" y="3" width="88" height="88" stroke="white" stroke-width="5.5"/>
-              <path d="M14 86 L14 22 L44 60 L74 22 L74 86" stroke="white" stroke-width="11" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
-              <line x1="80" y1="86" x2="80" y2="18" stroke="white" stroke-width="10" stroke-linecap="round"/>
-              <path d="M80 18 Q115 18 115 44 Q115 70 80 70" stroke="white" stroke-width="9" stroke-linecap="round" fill="none"/>
-              <text x="128" y="50" font-family="Roboto,sans-serif" font-weight="800" font-size="24" fill="white">Metalúrgica</text>
-              <text x="128" y="80" font-family="Roboto,sans-serif" font-weight="800" font-size="24" fill="white">Paranaguá</text>
-            </svg>
-          </a>
-          <p class="footer-desc">
-            Serviços industriais de metalurgia e engenharia em Paranaguá, Paraná. Mais de 30 anos atendendo as maiores empresas do litoral paranaense com excelência e comprometimento.
+    <!-- Menu mobile (oculto por padrão) -->
+    <nav id="mobile-nav" aria-label="Menu de navegação mobile">
+      <a href="#servicos">Serviços</a>
+      <a href="#diferenciais">Como trabalhamos</a>
+      <a href="#clientes">Clientes</a>
+      <a href="#contato">Contato</a>
+      <a href="https://wa.me/554134226670?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento."
+         class="btn btn-primary"
+         target="_blank"
+         rel="noopener noreferrer">WhatsApp — fale com a gente</a>
+    </nav>
+  </header>
+
+  <main id="inicio">
+
+    <!-- ============================================================
+         2 · HERO
+         Fundo blueprint (teal-900 + grade técnica)
+         Grid 2 colunas: headline/CTA | facet-frame
+    ============================================================ -->
+    <section class="blueprint hero-section" aria-labelledby="hero-h1">
+      <div class="wrap">
+        <div class="hero-grid">
+
+          <!-- Texto e CTAs -->
+          <div class="hero-text">
+            <span class="eyebrow">Paranaguá, PR · desde 2011</span>
+            <h1 id="hero-h1">
+              Estrutura, fabricação e montagem industrial <em>sob medida</em>
+            </h1>
+            <p class="lede">
+              Da engenharia ao jateamento e pintura, conduzimos cada etapa com equipe própria —
+              para plantas industriais que não podem parar.
+            </p>
+            <div class="hero-cta">
+              <a href="https://wa.me/554134226670?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento."
+                 class="btn btn-primary"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Abrir WhatsApp para falar com a equipe">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+                </svg>
+                Fale com a gente
+              </a>
+              <a href="#servicos" class="btn btn-outline-light">Ver serviços</a>
+            </div>
+            <div class="hero-stat-row" aria-label="Números da empresa">
+              <div class="hero-stat"><b>2011</b>Fundação</div>
+              <div class="hero-stat"><b>6</b>Frentes de atuação</div>
+              <div class="hero-stat"><b>5+</b>Clientes de grande porte</div>
+            </div>
+          </div>
+
+          <!-- Facet-frame
+               Para adicionar a foto real:
+               1. Salve o arquivo como assets/img/hero.webp e assets/img/hero.jpg
+               2. Remova a div.ff-placeholder
+               3. Descomente o bloco <picture> abaixo
+          -->
+          <div class="facet-frame"
+               role="img"
+               aria-label="Obra de estrutura metálica industrial da Metalúrgica Paranaguá">
+            <div class="ff-placeholder" aria-hidden="true"></div>
+            <!--
+            <picture>
+              <source srcset="assets/img/hero.webp" type="image/webp">
+              <img src="assets/img/hero.jpg"
+                   alt="Equipe da Metalúrgica Paranaguá em montagem de estrutura metálica industrial"
+                   loading="eager"
+                   width="800" height="600">
+            </picture>
+            -->
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3 · FAIXA DE CREDIBILIDADE — clientes
+    ============================================================ -->
+    <div id="clientes" class="credibility-strip" aria-labelledby="clientes-label">
+      <div class="wrap">
+        <div class="credibility">
+          <span class="eyebrow" id="clientes-label" style="margin-bottom:0;">Atende</span>
+          <span class="client" aria-label="Cliente: Bunge">Bunge</span>
+          <span class="client" aria-label="Cliente: Yara">Yara</span>
+          <span class="client" aria-label="Cliente: Petrobras">Petrobras</span>
+          <span class="client" aria-label="Cliente: TCP">TCP</span>
+          <span class="client" aria-label="Cliente: Mosaic">Mosaic</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         4 · SERVIÇOS — 6 cards com left-border em --accent
+         Um único CTA ao fechar a seção (tom de voz do DS)
+    ============================================================ -->
+    <section id="servicos" aria-labelledby="servicos-h2">
+      <div class="wrap">
+
+        <div class="services-intro">
+          <span class="eyebrow">Frentes de atuação</span>
+          <h2 id="servicos-h2">O que fazemos</h2>
+          <p class="lede">
+            Conduzimos projetos industriais do início ao fim com estrutura própria —
+            sem terceirizar as etapas que definem qualidade e prazo.
           </p>
         </div>
 
-        <!-- Links rápidos -->
-        <div>
-          <div class="footer-col-title">Links Rápidos</div>
-          <ul class="footer-links">
-            <li><a href="#hero">Home</a></li>
-            <li><a href="#servicos">Serviços</a></li>
-            <li><a href="#sobre">Sobre nós</a></li>
-            <li><a href="#clientes">Clientes</a></li>
-            <li><a href="#contato">Contato</a></li>
-          </ul>
+        <div class="services-grid" role="list">
+
+          <article class="service-card" role="listitem">
+            <span class="num">01</span>
+            <span class="badge b-engenharia">Engenharia</span>
+            <h3>Engenharia e Projeto</h3>
+            <p>Dimensionamento estrutural e projetos mecânicos sob medida, antes do primeiro corte de chapa. Traduzimos a necessidade da planta em documentação técnica executável.</p>
+          </article>
+
+          <article class="service-card" role="listitem">
+            <span class="num">02</span>
+            <span class="badge b-metalurgia">Metalurgia</span>
+            <h3>Fabricação e Usinagem</h3>
+            <p>Corte, conformação, soldagem e usinagem em estrutura própria. Trabalhamos aço carbono, inox e ligas especiais com controle dimensional rigoroso em cada etapa.</p>
+          </article>
+
+          <article class="service-card" role="listitem">
+            <span class="num">03</span>
+            <span class="badge b-industrial">Montagem Industrial</span>
+            <h3>Montagem Industrial</h3>
+            <p>Equipe própria em campo, do içamento ao alinhamento final. Atuamos em paradas programadas e emergenciais no Complexo Portuário de Paranaguá e região.</p>
+          </article>
+
+          <article class="service-card" role="listitem">
+            <span class="num">04</span>
+            <span class="badge b-metalurgia">Metalurgia</span>
+            <h3>Jateamento e Pintura</h3>
+            <p>Tratamento de superfície por jateamento abrasivo (SA 2½) e sistemas de pintura epóxi e poliuretano, conforme SSPC/NACE. Proteção compatível com o ambiente agressivo do porto.</p>
+          </article>
+
+          <article class="service-card" role="listitem">
+            <span class="num">05</span>
+            <span class="badge b-industrial">Manutenção Industrial</span>
+            <h3>Manutenção Industrial</h3>
+            <p>Manutenção preventiva e corretiva de equipamentos, estruturas e instalações. Minimizamos paradas não programadas e prolongamos a vida útil dos ativos da planta.</p>
+          </article>
+
+          <article class="service-card" role="listitem">
+            <span class="num">06</span>
+            <span class="badge b-metalurgia">Metalurgia</span>
+            <h3>Locação de Equipamentos</h3>
+            <p>Andaimes, plataformas elevatórias e ferramentas especiais disponíveis para locação com ou sem operador. Flexibilidade para obras pontuais ou contratos de longa duração.</p>
+          </article>
+
         </div>
 
-        <!-- Serviços -->
-        <div>
-          <div class="footer-col-title">Serviços</div>
-          <ul class="footer-links">
-            <li><a href="#servicos">Engenharia e Projeto</a></li>
-            <li><a href="#servicos">Fabricação e Usinagem</a></li>
-            <li><a href="#servicos">Montagem Industrial</a></li>
-            <li><a href="#servicos">Jateamento e Pintura</a></li>
-            <li><a href="#servicos">Manutenção Industrial</a></li>
-            <li><a href="#servicos">Aluguel de Equipamentos</a></li>
-          </ul>
+        <!-- CTA único fechando os serviços — texto exato do design system -->
+        <div class="services-cta">
+          <a href="https://wa.me/554134226670?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20serviços%20da%20Metalúrgica%20Paranaguá."
+             class="btn btn-outline-dark"
+             target="_blank"
+             rel="noopener noreferrer">
+            Fale com a gente e veja como podemos ajudar no seu próximo projeto
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5 · DIFERENCIAIS — como trabalhamos
+         Blueprint (teal-900 + grade) igual ao hero
+    ============================================================ -->
+    <section id="diferenciais" class="blueprint" aria-labelledby="diff-h2">
+      <div class="wrap">
+        <div class="diff-layout">
+
+          <div class="diff-intro">
+            <span class="eyebrow">Como trabalhamos</span>
+            <h2 id="diff-h2">Estrutura própria do começo ao fim</h2>
+            <p class="lede">
+              Não terceirizamos as etapas que definem o resultado. Isso nos dá controle real
+              sobre qualidade, prazo e segurança — e dá ao cliente uma única interlocução,
+              do projeto à entrega.
+            </p>
+            <a href="#contato" class="btn btn-outline-light">Entre em contato</a>
+          </div>
+
+          <div class="diff-list" role="list">
+
+            <div class="diff-item" role="listitem">
+              <span class="diff-num">01</span>
+              <div>
+                <h3>Equipe própria, sem intermediários</h3>
+                <p>Engenheiros, soldadores e montadores contratados diretamente. A qualidade do serviço não depende de subempreitada.</p>
+              </div>
+            </div>
+
+            <div class="diff-item" role="listitem">
+              <span class="diff-num">02</span>
+              <div>
+                <h3>Localização estratégica no porto</h3>
+                <p>Sediados a 1 km do Porto de Paranaguá, com logística ajustada para atender paradas e emergências sem perda de tempo.</p>
+              </div>
+            </div>
+
+            <div class="diff-item" role="listitem">
+              <span class="diff-num">03</span>
+              <div>
+                <h3>Rastreabilidade por etapa</h3>
+                <p>Cada fase do projeto é documentada: ensaios, laudos de soldagem e relatórios fotográficos entregues junto com a obra.</p>
+              </div>
+            </div>
+
+            <div class="diff-item" role="listitem">
+              <span class="diff-num">04</span>
+              <div>
+                <h3>Segurança integrada ao processo</h3>
+                <p>NRs aplicáveis em dia, PCMSO e PPRA atualizados. Atuamos dentro dos requisitos das maiores operadoras do porto.</p>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
+    </section>
 
+    <!-- ============================================================
+         6 · CONTATO
+         Endereço: Rod. PR 407, s/nº, Km 01, Jd. Esperança, Paranaguá-PR
+         WhatsApp: wa.me/554134226670
+    ============================================================ -->
+    <section id="contato" aria-labelledby="contato-h2">
+      <div class="wrap">
+        <div class="contato-layout">
+
+          <!-- Informações de contato -->
+          <div class="contato-info">
+            <span class="eyebrow">Fale conosco</span>
+            <h2 id="contato-h2">Onde estamos e como chegar</h2>
+            <p class="lede">
+              Nossa oficina fica a poucos minutos do porto. Venha nos visitar ou mande
+              uma mensagem — respondemos rápido.
+            </p>
+
+            <div class="contact-items">
+
+              <div class="contact-item">
+                <div class="contact-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                </div>
+                <div class="contact-text">
+                  <strong>Endereço</strong>
+                  <span>
+                    Rod. PR 407, s/nº, Km 01<br>
+                    Jardim Esperança — Paranaguá, PR
+                  </span>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.64 3.27 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.77-.77a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                </div>
+                <div class="contact-text">
+                  <strong>Telefone</strong>
+                  <a href="tel:+554134226670">(41) 3422-6670</a>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon" aria-hidden="true" style="background:#25D366;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+                  </svg>
+                </div>
+                <div class="contact-text">
+                  <strong>WhatsApp</strong>
+                  <a href="https://wa.me/554134226670?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento."
+                     target="_blank" rel="noopener noreferrer">(41) 3422-6670</a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Card de ação / call-to-action -->
+          <div class="contato-cta-card">
+            <span class="eyebrow">Próximos passos</span>
+            <h3>Pronto para começar?</h3>
+            <p class="desc">
+              Descreva o projeto — dimensões, prazo e local de obra — e respondemos
+              com uma estimativa em até 24 horas.
+            </p>
+            <a href="https://wa.me/554134226670?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento.%20Segue%20um%20resumo%20do%20projeto%3A%20"
+               class="btn btn-wa"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="Abrir WhatsApp para solicitar orçamento">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+              </svg>
+              Solicitar orçamento pelo WhatsApp
+            </a>
+            <p class="footnote">Respondemos em até 24 h nos dias úteis.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       7 · RODAPÉ
+       Textura do ícone: repeating-linear-gradient 60°/-60° (exato do DS)
+       Logo versão branca · sem seção de orçamentos
+  ============================================================ -->
+  <footer id="site-footer" aria-label="Rodapé">
+    <div class="footer-tex" aria-hidden="true"></div>
+    <div class="wrap footer-inner">
+
+      <!-- Faixa de clientes no topo do footer -->
+      <div class="footer-clients credibility" aria-label="Clientes atendidos">
+        <span class="eyebrow" style="color:var(--teal-400); margin-bottom:0;">Atende</span>
+        <span class="client" aria-label="Bunge">Bunge</span>
+        <span class="client" aria-label="Yara">Yara</span>
+        <span class="client" aria-label="Petrobras">Petrobras</span>
+        <span class="client" aria-label="TCP">TCP</span>
+        <span class="client" aria-label="Mosaic">Mosaic</span>
+      </div>
+
+      <!-- Três colunas -->
+      <div class="footer-cols">
+
+        <!-- Coluna 1: marca + descrição -->
+        <div>
+          <a href="#inicio" aria-label="Metalúrgica Paranaguá — voltar ao início">
+            <!-- Logo branca (mesmo SVG, cores invertidas) -->
+            <svg viewBox="0 0 240 240" width="46" height="46" style="margin-bottom:14px;"
+                 aria-hidden="true" focusable="false">
+              <rect x="20" y="20" width="200" height="200"
+                    fill="none" stroke="#ffffff" stroke-width="6"/>
+              <polygon points="42,92 72,70 72,168 42,140"   fill="#ffffff"/>
+              <polygon points="72,72 130,72 102,205"         fill="#ffffff"/>
+              <rect x="132" y="42" width="28" height="58"    fill="#7fd6cc"/>
+              <path d="M132,92 A58,58 0 0 1 132,208 L132,178 A28,28 0 0 0 132,122 Z"
+                    fill="#7fd6cc"/>
+            </svg>
+          </a>
+          <p>
+            Metalúrgica Paranaguá — engenharia, fabricação e montagem industrial
+            desde 2011. Sediados no litoral do Paraná, atendemos o porto e toda a região sul.
+          </p>
+        </div>
+
+        <!-- Coluna 2: contato -->
+        <div>
+          <h4>Contato</h4>
+          <a href="https://maps.google.com/?q=Rod.+PR+407+Km+01+Paranaguá+PR"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Ver endereço no Google Maps">
+            Rod. PR 407, s/nº, Km 01<br>Jd. Esperança — Paranaguá, PR
+          </a>
+          <a href="tel:+554134226670">(41) 3422-6670</a>
+          <a href="https://wa.me/554134226670?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento."
+             target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </div>
+
+        <!-- Coluna 3: frentes de atuação -->
+        <div>
+          <h4>Frentes de atuação</h4>
+          <a href="#servicos">Engenharia e Projeto</a>
+          <a href="#servicos">Fabricação e Usinagem</a>
+          <a href="#servicos">Montagem Industrial</a>
+          <a href="#servicos">Jateamento e Pintura</a>
+          <a href="#servicos">Manutenção Industrial</a>
+          <a href="#servicos">Locação de Equipamentos</a>
+        </div>
+
+      </div>
+
+      <!-- Barra de copyright -->
       <div class="footer-bottom">
-        <span class="footer-copy">
-          &copy; <span id="yr"></span> Metalúrgica Paranaguá LTDA. Todos os direitos reservados.
-        </span>
-        <span class="footer-tel">
-          Tel: <a href="tel:+554134226670">(41) 3422-6670</a>
-        </span>
+        <p>&copy; <span id="ano-atual"></span> Metalúrgica Paranaguá LTDA. Todos os direitos reservados.</p>
+        <p>Paranaguá, PR — Brasil</p>
       </div>
+
     </div>
   </footer>
 
-  <!-- WhatsApp flutuante -->
-  <div class="wa-float" aria-label="Contato via WhatsApp">
-    <div class="wa-float-tooltip" aria-hidden="true">Fale conosco!</div>
-    <a
-      href="https://wa.me/554134226670?text=Olá!%20Gostaria%20de%20mais%20informações."
-      target="_blank"
-      rel="noopener noreferrer"
-      class="wa-float-btn"
-      aria-label="Abrir WhatsApp"
-    >
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-      </svg>
-    </a>
-  </div>
+  <!-- WhatsApp flutuante (sempre visível) -->
+  <a href="https://wa.me/554134226670?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento."
+     class="wa-float"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Chamar no WhatsApp — (41) 3422-6670">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+    </svg>
+  </a>
 
-  <!-- Scroll to top -->
-  <button class="scroll-top" id="scrollTop" aria-label="Voltar ao topo">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
-  </button>
-
-  <!-- ===========================================
-       JAVASCRIPT
-  =========================================== -->
   <script>
-    /* Ano no footer */
-    document.getElementById('yr').textContent = new Date().getFullYear();
+    /* Ano dinâmico no copyright */
+    document.getElementById('ano-atual').textContent = new Date().getFullYear();
 
-    /* Header scroll + active nav + scroll-top */
-    const header   = document.getElementById('header');
-    const sTbtn    = document.getElementById('scrollTop');
-    const sections = document.querySelectorAll('section[id]');
-    const navAs    = document.querySelectorAll('.nav-links a');
-
+    /* Shadow no header ao rolar */
+    const header = document.getElementById('site-header');
     window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      header.classList.toggle('scrolled', y > 60);
-      sTbtn.classList.toggle('show', y > 400);
-
-      let cur = '';
-      sections.forEach(s => { if (y >= s.offsetTop - 130) cur = s.id; });
-      navAs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+      header.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
 
-    sTbtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
     /* Hamburger mobile */
-    const burger = document.getElementById('hamburger');
-    const mMenu  = document.getElementById('mobileMenu');
+    const burger    = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
 
     burger.addEventListener('click', () => {
-      const open = mMenu.classList.toggle('open');
+      const open = mobileNav.classList.toggle('open');
       burger.classList.toggle('open', open);
-      burger.setAttribute('aria-expanded', open);
-    });
-    mMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      mMenu.classList.remove('open');
-      burger.classList.remove('open');
-      burger.setAttribute('aria-expanded', 'false');
-    }));
-
-    /* Máscara de telefone */
-    document.getElementById('tel').addEventListener('input', e => {
-      let v = e.target.value.replace(/\D/g, '').slice(0, 11);
-      if (v.length > 6) v = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
-      else if (v.length > 2) v = `(${v.slice(0,2)}) ${v.slice(2)}`;
-      else if (v.length) v = `(${v}`;
-      e.target.value = v;
+      burger.setAttribute('aria-expanded', String(open));
     });
 
-    /* Validação do formulário */
-    const form   = document.getElementById('contactForm');
-    const formOk = document.getElementById('formOk');
-
-    const setErr = (id, show) => {
-      const el  = document.getElementById(id);
-      const msg = document.getElementById(id + '-err');
-      if (!el || !msg) return;
-      el.classList.toggle('is-error', show);
-      msg.classList.toggle('show', show);
-    };
-    const validEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-
-    ['nome','email','tel','msg'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('input', () => setErr(id, false));
+    /* Fecha o menu mobile ao clicar em qualquer link */
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+        burger.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+      });
     });
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const nome  = document.getElementById('nome').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const tel   = document.getElementById('tel').value.trim();
-      const msg   = document.getElementById('msg').value.trim();
-
-      setErr('nome',  nome.length < 2);
-      setErr('email', !validEmail(email));
-      setErr('tel',   tel.replace(/\D/g,'').length < 10);
-      setErr('msg',   msg.length < 10);
-
-      if (nome.length < 2 || !validEmail(email) || tel.replace(/\D/g,'').length < 10 || msg.length < 10) return;
-
-      /* Sem backend: redireciona para WhatsApp com dados pré-preenchidos */
-      const emp = document.getElementById('empresa').value.trim();
-      const svc = document.getElementById('servico');
-      const svcLabel = svc.options[svc.selectedIndex].text;
-
-      const waMsg =
-        `Olá! Gostaria de um orçamento.%0A%0A` +
-        `*Nome:* ${enc(nome)}%0A` +
-        `*Empresa:* ${enc(emp || '–')}%0A` +
-        `*E-mail:* ${enc(email)}%0A` +
-        `*Telefone:* ${enc(tel)}%0A` +
-        `*Serviço:* ${enc(svcLabel)}%0A` +
-        `*Mensagem:* ${enc(msg)}`;
-
-      window.open(`https://wa.me/554134226670?text=${waMsg}`, '_blank', 'noopener,noreferrer');
-
-      formOk.classList.add('show');
-      form.reset();
-      setTimeout(() => formOk.classList.remove('show'), 7000);
+    /* Fecha o menu mobile com ESC */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
+        mobileNav.classList.remove('open');
+        burger.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+        burger.focus();
+      }
     });
-
-    function enc(s) { return encodeURIComponent(s); }
   </script>
 
 </body>
