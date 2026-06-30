@@ -3,12 +3,10 @@
  * Depende de tokens.css (deve ser importado antes).
  */
 
-/* ─────────────────────────────────────────────────────────────────
-   GOOGLE FONTS — Inter · Sora · IBM Plex Mono
-   Apenas pesos 400 e 500.
-   ───────────────────────────────────────────────────────────────── */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+/*
+   GOOGLE FONTS — carregado via <link> no index.html (não via @import,
+   que bloquearia o parsing deste arquivo enquanto aguarda resposta externa).
+*/
 
 /* ─────────────────────────────────────────────────────────────────
    PF HANDBOOK PRO — fonte licenciada (ParaType)
@@ -56,12 +54,12 @@ html {
 }
 
 body {
-  font-family: var(--font-corpo);
-  font-size: var(--text-base);
+  font-family: var(--font-corpo, 'Inter', sans-serif);
+  font-size: var(--text-base, 1rem);
   font-weight: 400;
   line-height: 1.6;
-  color: var(--color-texto);
-  background-color: var(--color-fundo);
+  color: var(--color-texto, #15191a);           /* fallback: Pantone Black 6C */
+  background-color: var(--color-fundo, #ffffff);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
