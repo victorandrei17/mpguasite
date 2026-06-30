@@ -1,0 +1,237 @@
+/*
+ * base.css — Reset moderno, tipografia base e declaração de fontes
+ * Depende de tokens.css (deve ser importado antes).
+ */
+
+/* ─────────────────────────────────────────────────────────────────
+   GOOGLE FONTS — Inter · Sora · IBM Plex Mono
+   Apenas pesos 400 e 500.
+   ───────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+/* ─────────────────────────────────────────────────────────────────
+   PF HANDBOOK PRO — fonte licenciada (ParaType)
+   Servida localmente de assets/fonts/.
+   Declare os arquivos nos pesos 400 e 500.
+   ───────────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'PF Handbook Pro';
+  src:
+    url('../assets/fonts/PFHandbookPro-Regular.woff2') format('woff2'),
+    url('../assets/fonts/PFHandbookPro-Regular.woff')  format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PF Handbook Pro';
+  src:
+    url('../assets/fonts/PFHandbookPro-Medium.woff2') format('woff2'),
+    url('../assets/fonts/PFHandbookPro-Medium.woff')  format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   RESET MODERNO
+   ───────────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  hanging-punctuation: first last;
+}
+
+body {
+  font-family: var(--font-corpo);
+  font-size: var(--text-base);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-texto);
+  background-color: var(--color-fundo);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  min-height: 100dvh;
+}
+
+/* Mídia */
+img,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}
+
+/* Quebra de palavra em texto longo */
+p,
+h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* Listas */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Formulários */
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Tabelas */
+table {
+  border-collapse: collapse;
+}
+
+/* Elementos de bloco dentro de inline */
+address {
+  font-style: normal;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   FOCO VISÍVEL — acessibilidade (WCAG 2.1 SC 2.4.7)
+   ───────────────────────────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* Remove o outline padrão apenas quando há :focus-visible */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   TIPOGRAFIA BASE
+   ───────────────────────────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-titulo);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-teal-principal);
+  letter-spacing: -0.015em;
+}
+
+h1 { font-size: var(--text-4xl); }
+h2 { font-size: var(--text-3xl); }
+h3 { font-size: var(--text-xl);  }
+h4 { font-size: var(--text-lg);  }
+h5 { font-size: var(--text-md);  }
+h6 { font-size: var(--text-base);}
+
+p {
+  line-height: 1.65;
+  max-width: 70ch;
+}
+
+strong,
+b {
+  font-weight: 500;
+}
+
+small {
+  font-size: var(--text-sm);
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   LINKS
+   ───────────────────────────────────────────────────────────────── */
+
+a:hover {
+  color: var(--color-teal-secundario);
+  transition: color var(--transition);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   SELEÇÃO DE TEXTO
+   ───────────────────────────────────────────────────────────────── */
+
+::selection {
+  background-color: var(--color-teal-secundario);
+  color: var(--color-fundo);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   SCROLL SNAPPING (desativa em quem prefere movimento reduzido)
+   ───────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   UTILITÁRIO — conteúdo apenas para leitores de tela
+   ───────────────────────────────────────────────────────────────── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
