@@ -12,26 +12,39 @@
 
   <style>
     /* =============================================
-       CSS CUSTOM PROPERTIES – Paleta da marca
+       PANTONE PALETTE
+       316C · 7718C · 7717C · 3272C · 563C · 624C
+       BLACK 6C · COOL GRAY 7C
     ============================================= */
     :root {
-      --navy:       #0D1F3C;   /* azul-marinho profundo – primária */
-      --navy-mid:   #162A52;   /* azul médio – header hover, card borda */
-      --orange:     #E87722;   /* laranja industrial – destaque / CTA */
-      --orange-dk:  #C45F0A;   /* laranja escuro – hover CTA */
-      --steel:      #3A4A5C;   /* cinza-aço – texto secundário */
-      --steel-lt:   #6B7C93;   /* cinza claro – subtextos */
-      --bg-light:   #F4F6F9;   /* fundo claro das seções alternadas */
-      --white:      #FFFFFF;
-      --text:       #1A202C;
-      --border:     #D1D9E6;
+      --p316:  #005F61;   /* PANTONE 316C  – primária escura  */
+      --p7718: #006E6E;   /* PANTONE 7718C – teal médio-escuro*/
+      --p7717: #007E79;   /* PANTONE 7717C – teal médio       */
+      --p3272: #00AFA0;   /* PANTONE 3272C – teal vibrante    */
+      --p563:  #7AC5BD;   /* PANTONE 563C  – teal claro       */
+      --p624:  #A8CAC5;   /* PANTONE 624C  – teal muito claro */
+      --blk6:  #1C1B1B;   /* PANTONE Black 6C                 */
+      --cgray: #9C9FA0;   /* PANTONE Cool Gray 7C             */
 
-      --radius:     6px;
-      --shadow-sm:  0 2px 8px rgba(0,0,0,.08);
-      --shadow-md:  0 6px 24px rgba(0,0,0,.12);
-      --transition: 0.25s ease;
+      /* aliases semânticos */
+      --primary:   var(--p316);
+      --secondary: var(--p7717);
+      --accent:    var(--p3272);
+      --light:     var(--p563);
+      --lighter:   var(--p624);
+      --dark:      var(--blk6);
+      --gray:      var(--cgray);
+      --white:     #FFFFFF;
+      --bg-section: rgba(168,202,197,.14);
 
-      --max-w: 1140px;
+      --header-h:   72px;
+      --radius:     8px;
+      --radius-lg:  16px;
+      --shadow-sm:  0 2px 10px rgba(0,95,97,.08);
+      --shadow-md:  0 8px 32px rgba(0,95,97,.13);
+      --shadow-lg:  0 20px 60px rgba(0,95,97,.18);
+      --transition: .25s ease;
+      --max-w:      1140px;
     }
 
     /* =============================================
@@ -41,134 +54,175 @@
     html { scroll-behavior: smooth; font-size: 16px; }
     body {
       font-family: 'Roboto', sans-serif;
-      color: var(--text);
+      color: var(--dark);
       background: var(--white);
-      line-height: 1.6;
+      line-height: 1.65;
       overflow-x: hidden;
     }
     a { color: inherit; text-decoration: none; }
     ul { list-style: none; }
-    img { display: block; max-width: 100%; }
     button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    img { display: block; max-width: 100%; }
 
     /* =============================================
        UTILITY
     ============================================= */
     .container { width: 100%; max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
-    .section-title {
-      font-size: 2rem;
+
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1.5px solid rgba(0,175,160,.35);
+      background: rgba(0,175,160,.08);
+      color: var(--p7717);
+    }
+    .tag-chip .dot {
+      width: 6px; height: 6px;
+      background: var(--p3272);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .section-label {
+      font-size: .75rem;
       font-weight: 700;
-      color: var(--navy);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--p3272);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.2;
       position: relative;
-      padding-bottom: 16px;
-      margin-bottom: 12px;
+      padding-bottom: 18px;
+      margin-bottom: 14px;
     }
     .section-title::after {
       content: '';
       position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 48px;
-      height: 4px;
-      background: var(--orange);
+      bottom: 0; left: 0;
+      width: 40px; height: 3px;
+      background: var(--p3272);
       border-radius: 2px;
     }
     .section-title.centered { text-align: center; }
     .section-title.centered::after { left: 50%; transform: translateX(-50%); }
-    .section-subtitle {
-      color: var(--steel-lt);
+
+    .section-sub {
+      color: var(--cgray);
       font-size: 1.05rem;
-      max-width: 560px;
+      line-height: 1.7;
     }
-    .section-subtitle.centered { margin: 0 auto; text-align: center; }
+    .section-sub.centered { text-align: center; }
+
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 13px 28px;
-      border-radius: var(--radius);
-      font-weight: 600;
-      font-size: .95rem;
-      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      padding: 14px 28px;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: .93rem;
+      transition: all var(--transition);
+      white-space: nowrap;
     }
+    .btn svg { flex-shrink: 0; }
+
     .btn-primary {
-      background: var(--orange);
+      background: var(--primary);
       color: var(--white);
+      box-shadow: 0 4px 20px rgba(0,95,97,.3);
     }
     .btn-primary:hover {
-      background: var(--orange-dk);
+      background: var(--p7717);
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(232,119,34,.35);
+      box-shadow: 0 8px 28px rgba(0,95,97,.38);
     }
+
     .btn-outline {
       background: transparent;
-      color: var(--white);
-      border: 2px solid rgba(255,255,255,.7);
+      color: var(--primary);
+      border: 2px solid var(--p563);
     }
     .btn-outline:hover {
-      background: rgba(255,255,255,.1);
-      border-color: var(--white);
+      border-color: var(--primary);
+      background: rgba(0,95,97,.05);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost-white {
+      background: rgba(255,255,255,.15);
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,.4);
+      backdrop-filter: blur(6px);
+    }
+    .btn-ghost-white:hover {
+      background: rgba(255,255,255,.25);
+      border-color: rgba(255,255,255,.7);
     }
 
     /* =============================================
-       HEADER / NAVBAR
+       HEADER – fixo, fundo branco
     ============================================= */
     #header {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
+      height: var(--header-h);
       z-index: 1000;
-      background: var(--navy);
-      transition: box-shadow var(--transition), background var(--transition);
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,95,97,.08);
+      transition: box-shadow var(--transition);
     }
-    #header.scrolled {
-      box-shadow: 0 2px 20px rgba(0,0,0,.25);
-    }
+    #header.scrolled { box-shadow: 0 4px 24px rgba(0,95,97,.12); }
+
     .nav-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 70px;
+      height: var(--header-h);
     }
 
-    /* Logo */
+    /* LOGO ---------------------------------------- */
     .nav-logo {
       display: flex;
       align-items: center;
-      gap: 12px;
       flex-shrink: 0;
+      transition: opacity var(--transition);
     }
-    .nav-logo svg { display: block; }
-    .logo-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.2;
+    .nav-logo:hover { opacity: .85; }
+    /* Tenta carregar o PNG; o SVG é exibido se o PNG não existir */
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      display: block;
     }
-    .logo-text strong {
-      font-size: .95rem;
-      font-weight: 700;
-      color: var(--white);
-      letter-spacing: .5px;
-    }
-    .logo-text span {
-      font-size: .7rem;
-      font-weight: 300;
-      color: rgba(255,255,255,.6);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
+    .nav-logo .logo-svg-fallback { display: none; }
+    .nav-logo img.error + .logo-svg-fallback,
+    .nav-logo img[data-error] + .logo-svg-fallback { display: block; }
 
-    /* Nav links */
+    /* NAV LINKS ------------------------------------ */
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 36px;
+      gap: 32px;
     }
     .nav-links a {
-      font-size: .9rem;
+      font-size: .88rem;
       font-weight: 500;
-      color: rgba(255,255,255,.8);
+      color: var(--cgray);
       position: relative;
       padding-bottom: 4px;
       transition: color var(--transition);
@@ -178,441 +232,491 @@
       position: absolute;
       bottom: 0; left: 0;
       width: 0; height: 2px;
-      background: var(--orange);
+      background: var(--p3272);
+      border-radius: 2px;
       transition: width var(--transition);
     }
     .nav-links a:hover,
-    .nav-links a.active { color: var(--white); }
+    .nav-links a.active { color: var(--primary); }
     .nav-links a:hover::after,
     .nav-links a.active::after { width: 100%; }
 
-    /* CTA nav button */
     .nav-cta {
-      padding: 9px 20px;
+      padding: 10px 22px;
       font-size: .85rem;
+      border-radius: 100px;
     }
 
-    /* Hamburger */
-    .nav-hamburger {
+    /* HAMBURGER ------------------------------------ */
+    .hamburger {
       display: none;
       flex-direction: column;
       gap: 5px;
       padding: 6px;
+      z-index: 10;
     }
-    .nav-hamburger span {
+    .hamburger span {
       display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--white);
+      width: 24px; height: 2px;
+      background: var(--primary);
       border-radius: 2px;
       transition: transform var(--transition), opacity var(--transition);
     }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* Mobile menu */
+    /* MOBILE MENU ---------------------------------- */
     .mobile-menu {
       display: none;
-      position: absolute;
-      top: 70px;
-      left: 0;
-      width: 100%;
-      background: var(--navy-mid);
-      padding: 20px 24px 28px;
+      position: fixed;
+      top: var(--header-h);
+      left: 0; right: 0;
+      background: var(--white);
+      padding: 20px 24px 32px;
       box-shadow: var(--shadow-md);
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
+      border-top: 1px solid rgba(0,95,97,.08);
     }
     .mobile-menu.open { display: flex; }
     .mobile-menu a {
       font-size: 1rem;
       font-weight: 500;
-      color: rgba(255,255,255,.85);
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      color: var(--dark);
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(0,95,97,.06);
       transition: color var(--transition);
     }
-    .mobile-menu a:hover { color: var(--orange); }
-    .mobile-menu .btn-primary { margin-top: 12px; width: fit-content; }
+    .mobile-menu a:hover { color: var(--primary); }
+    .mobile-menu .btn-primary { margin-top: 16px; border-radius: var(--radius); justify-content: center; }
 
     /* =============================================
-       HERO
+       HERO – inspirado no Tasker
+       Fundo branco com gradients radiais suaves
     ============================================= */
     #hero {
-      padding-top: 70px;
+      padding-top: var(--header-h);
       min-height: 100vh;
       display: flex;
       align-items: center;
-      background: var(--navy);
       position: relative;
       overflow: hidden;
+      background:
+        radial-gradient(ellipse 65% 55% at 85% 15%, rgba(122,197,189,.28) 0%, transparent 65%),
+        radial-gradient(ellipse 55% 65% at 5%  85%, rgba(168,202,197,.22) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 60% 60%, rgba(0,175,160,.07) 0%, transparent 55%),
+        #FFFFFF;
     }
-    /* Decorative geometry */
-    #hero::before {
-      content: '';
-      position: absolute;
-      top: -80px; right: -120px;
-      width: 600px; height: 600px;
-      border: 80px solid rgba(232,119,34,.12);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    #hero::after {
-      content: '';
-      position: absolute;
-      bottom: -60px; left: -80px;
-      width: 400px; height: 400px;
-      border: 60px solid rgba(255,255,255,.04);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    /* Grid lines texture */
-    .hero-grid {
+
+    /* Elementos decorativos de fundo */
+    .hero-grid-lines {
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-      background-size: 48px 48px;
+        linear-gradient(rgba(0,95,97,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,95,97,.025) 1px, transparent 1px);
+      background-size: 60px 60px;
       pointer-events: none;
     }
-    .hero-content {
+
+    .hero-inner {
       position: relative;
       z-index: 2;
-      max-width: 700px;
+      width: 100%;
+      padding: 80px 0 60px;
     }
-    .hero-badge {
+
+    .hero-content {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* Badge de destaque (como Tasker "Ranked #1") */
+    .hero-ranked {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(232,119,34,.15);
-      border: 1px solid rgba(232,119,34,.35);
-      color: var(--orange);
+      background: var(--white);
+      border: 1.5px solid rgba(0,175,160,.3);
+      border-radius: 100px;
+      padding: 7px 16px;
       font-size: .8rem;
       font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: 100px;
-      margin-bottom: 28px;
+      color: var(--p7717);
+      box-shadow: 0 2px 12px rgba(0,95,97,.08);
+      margin-bottom: 32px;
     }
-    .hero-badge span { width: 6px; height: 6px; background: var(--orange); border-radius: 50%; }
-    .hero-title {
-      font-size: clamp(2.2rem, 5vw, 3.6rem);
-      font-weight: 900;
-      color: var(--white);
-      line-height: 1.1;
-      margin-bottom: 24px;
-      letter-spacing: -.5px;
+    .hero-ranked-dot {
+      width: 8px; height: 8px;
+      background: var(--p3272);
+      border-radius: 50%;
     }
-    .hero-title em {
-      font-style: normal;
-      color: var(--orange);
-    }
-    .hero-sub {
-      font-size: 1.1rem;
-      font-weight: 300;
-      color: rgba(255,255,255,.7);
-      margin-bottom: 40px;
-      max-width: 520px;
-      line-height: 1.7;
-    }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 16px; }
-    .hero-stats {
-      margin-top: 72px;
-      display: flex;
-      gap: 48px;
-      flex-wrap: wrap;
-    }
-    .stat {
-      border-left: 3px solid var(--orange);
-      padding-left: 16px;
-    }
-    .stat strong {
-      display: block;
-      font-size: 1.8rem;
+    .hero-ranked a {
+      color: var(--p3272);
       font-weight: 700;
-      color: var(--white);
-      line-height: 1;
-    }
-    .stat span {
-      font-size: .8rem;
-      color: rgba(255,255,255,.5);
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      text-decoration: underline;
+      text-decoration-color: rgba(0,175,160,.4);
     }
 
-    /* =============================================
-       ABOUT STRIP (mini)
-    ============================================= */
-    #about-strip {
-      background: var(--orange);
-      padding: 20px 0;
+    /* Título */
+    .hero-title {
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1.08;
+      letter-spacing: -1.5px;
+      margin-bottom: 24px;
     }
-    .strip-inner {
+    .hero-title .accent {
+      background: linear-gradient(135deg, var(--p7717) 0%, var(--p3272) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--cgray);
+      max-width: 520px;
+      margin: 0 auto 40px;
+      line-height: 1.75;
+    }
+
+    /* CTA group */
+    .hero-cta-group {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 48px;
+      gap: 14px;
       flex-wrap: wrap;
+      margin-bottom: 36px;
     }
-    .strip-item {
+
+    /* Trust bar */
+    .hero-trust {
       display: flex;
       align-items: center;
-      gap: 10px;
-      color: var(--white);
-      font-size: .9rem;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: .82rem;
+      color: var(--cgray);
       font-weight: 500;
     }
-    .strip-item svg { flex-shrink: 0; opacity: .85; }
+    .trust-item svg { color: var(--p3272); flex-shrink: 0; }
+
+    /* Floating labels (como Tasker "Guest" / "Pink Panther") */
+    .float-badge {
+      position: absolute;
+      background: var(--white);
+      border: 1.5px solid rgba(0,95,97,.15);
+      border-radius: var(--radius);
+      padding: 8px 14px;
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--primary);
+      box-shadow: 0 4px 16px rgba(0,95,97,.10);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+    .float-badge.left-1  { top: 28%; left: 4%;  animation: floatA 6s ease-in-out infinite; }
+    .float-badge.left-2  { bottom: 30%; left: 7%; animation: floatB 7s ease-in-out infinite; }
+    .float-badge.right-1 { top: 25%; right: 4%;  animation: floatC 5.5s ease-in-out infinite; }
+    .float-badge.right-2 { bottom: 28%; right: 6%; animation: floatA 8s ease-in-out infinite reverse; }
+
+    @keyframes floatA {
+      0%,100% { transform: translateY(0px); }
+      50%      { transform: translateY(-10px); }
+    }
+    @keyframes floatB {
+      0%,100% { transform: translateY(0px) rotate(-1deg); }
+      50%      { transform: translateY(-8px) rotate(1deg); }
+    }
+    @keyframes floatC {
+      0%,100% { transform: translateY(-4px); }
+      50%      { transform: translateY(6px); }
+    }
 
     /* =============================================
-       SERVICES
+       STRIP DE NÚMEROS
+    ============================================= */
+    #strip {
+      background: var(--primary);
+      padding: 28px 0;
+    }
+    .strip-grid {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+    .strip-stat {
+      flex: 1;
+      min-width: 150px;
+      text-align: center;
+      padding: 12px 24px;
+      border-right: 1px solid rgba(255,255,255,.12);
+    }
+    .strip-stat:last-child { border-right: none; }
+    .strip-stat strong {
+      display: block;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1;
+    }
+    .strip-stat span {
+      font-size: .78rem;
+      font-weight: 500;
+      color: var(--p563);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* =============================================
+       SERVIÇOS
     ============================================= */
     #servicos {
-      padding: 96px 0;
-      background: var(--bg-light);
+      padding: 100px 0;
+      background: var(--white);
     }
-    .services-header {
-      margin-bottom: 56px;
+    .services-head {
+      margin-bottom: 60px;
     }
     .services-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
+      gap: 24px;
     }
-    .service-card {
+
+    .svc-card {
       background: var(--white);
-      border-radius: 10px;
-      padding: 36px 32px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      border: 1.5px solid rgba(0,95,97,.1);
+      border-radius: var(--radius-lg);
+      padding: 36px 30px 28px;
+      transition: all var(--transition);
       position: relative;
       overflow: hidden;
     }
-    .service-card::before {
+    .svc-card::after {
       content: '';
       position: absolute;
-      top: 0; left: 0;
-      width: 4px; height: 100%;
-      background: var(--orange);
-      transform: scaleY(0);
-      transform-origin: bottom;
-      transition: transform var(--transition);
+      inset: 0;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(0,175,160,.04) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity var(--transition);
     }
-    .service-card:hover {
-      transform: translateY(-6px);
+    .svc-card:hover {
+      border-color: var(--p3272);
       box-shadow: var(--shadow-md);
-      border-color: var(--orange);
+      transform: translateY(-6px);
     }
-    .service-card:hover::before { transform: scaleY(1); }
-    .service-icon {
-      width: 52px;
-      height: 52px;
-      background: rgba(232,119,34,.1);
-      border-radius: 10px;
+    .svc-card:hover::after { opacity: 1; }
+
+    .svc-icon {
+      width: 52px; height: 52px;
+      background: rgba(0,175,160,.1);
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 20px;
       transition: background var(--transition);
     }
-    .service-card:hover .service-icon { background: rgba(232,119,34,.18); }
-    .service-name {
-      font-size: 1.1rem;
+    .svc-card:hover .svc-icon { background: rgba(0,175,160,.18); }
+
+    .svc-name {
+      font-size: 1.05rem;
       font-weight: 700;
-      color: var(--navy);
+      color: var(--primary);
       margin-bottom: 10px;
     }
-    .service-desc {
-      font-size: .92rem;
-      color: var(--steel);
+    .svc-desc {
+      font-size: .9rem;
+      color: var(--cgray);
       line-height: 1.7;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
-    .service-link {
-      font-size: .85rem;
-      font-weight: 600;
-      color: var(--orange);
+    .svc-link {
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      font-size: .83rem;
+      font-weight: 700;
+      color: var(--p3272);
       transition: gap var(--transition), color var(--transition);
     }
-    .service-link:hover { gap: 10px; color: var(--orange-dk); }
+    .svc-link:hover { gap: 10px; color: var(--primary); }
 
     /* =============================================
-       SOBRE A EMPRESA
+       SOBRE
     ============================================= */
     #sobre {
-      padding: 96px 0;
-      background: var(--white);
+      padding: 100px 0;
+      background: var(--bg-section);
     }
-    .about-inner {
+    .about-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1.1fr;
       gap: 72px;
       align-items: center;
     }
-    .about-visual {
-      position: relative;
-    }
-    .about-graphic {
-      width: 100%;
-      max-width: 460px;
-      background: var(--navy);
-      border-radius: 12px;
+
+    /* Coluna visual */
+    .about-visual-wrap { position: relative; }
+
+    .about-card-main {
+      background: var(--primary);
+      border-radius: var(--radius-lg);
       padding: 48px 40px;
       color: var(--white);
       position: relative;
       overflow: hidden;
     }
-    .about-graphic::before {
+    .about-card-main::before {
       content: '';
       position: absolute;
-      top: -40px; right: -40px;
-      width: 200px; height: 200px;
-      background: rgba(232,119,34,.15);
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      background: rgba(0,175,160,.2);
       border-radius: 50%;
     }
-    .about-graphic-title {
+    .about-card-main::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: -40px;
+      width: 150px; height: 150px;
+      background: rgba(122,197,189,.12);
+      border-radius: 50%;
+    }
+
+    .about-card-title {
       font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .about-graphic-sub {
-      font-size: .85rem;
-      color: rgba(255,255,255,.6);
-      margin-bottom: 32px;
-    }
-    .about-values {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      font-weight: 800;
+      margin-bottom: 6px;
       position: relative;
+      z-index: 1;
     }
-    .about-value {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      font-size: .9rem;
+    .about-card-sub {
+      font-size: .82rem;
+      color: var(--p563);
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 1;
     }
-    .value-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--orange);
+
+    .mvv-list { display: flex; flex-direction: column; gap: 18px; position: relative; z-index: 1; }
+    .mvv-item { display: flex; gap: 12px; }
+    .mvv-dot {
+      width: 8px; height: 8px;
+      background: var(--p3272);
       border-radius: 50%;
       flex-shrink: 0;
       margin-top: 6px;
     }
-    .value-text strong {
+    .mvv-item strong {
       display: block;
-      font-weight: 600;
+      font-size: .85rem;
+      font-weight: 700;
       color: var(--white);
       margin-bottom: 2px;
     }
-    .value-text span { color: rgba(255,255,255,.55); font-size: .82rem; }
+    .mvv-item span {
+      font-size: .82rem;
+      color: rgba(255,255,255,.55);
+    }
 
     /* Badge flutuante */
-    .about-badge {
+    .about-float-badge {
       position: absolute;
-      bottom: -20px;
-      right: -20px;
-      background: var(--orange);
+      bottom: -20px; right: -20px;
+      background: var(--p3272);
       color: var(--white);
-      border-radius: 10px;
-      padding: 20px 24px;
-      box-shadow: var(--shadow-md);
+      border-radius: var(--radius);
+      padding: 18px 22px;
       text-align: center;
+      box-shadow: var(--shadow-lg);
     }
-    .about-badge strong {
+    .about-float-badge strong {
       display: block;
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 900;
       line-height: 1;
     }
-    .about-badge span {
-      font-size: .78rem;
-      opacity: .85;
-    }
+    .about-float-badge span { font-size: .75rem; opacity: .85; }
 
-    .about-text .section-subtitle {
-      margin-bottom: 28px;
-    }
+    /* Coluna texto */
+    .about-text .section-sub { margin-bottom: 24px; }
     .about-body {
-      font-size: .97rem;
-      color: var(--steel);
-      line-height: 1.75;
-      margin-bottom: 16px;
+      font-size: .96rem;
+      color: #555;
+      line-height: 1.78;
+      margin-bottom: 14px;
     }
-    .about-checkmarks {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin: 28px 0 36px;
-    }
+    .check-list { display: flex; flex-direction: column; gap: 10px; margin: 24px 0 36px; }
     .check-item {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: .93rem;
-      color: var(--text);
+      font-size: .92rem;
       font-weight: 500;
+      color: var(--dark);
     }
-    .check-item svg { flex-shrink: 0; color: var(--orange); }
+    .check-item svg { color: var(--p3272); flex-shrink: 0; }
 
     /* =============================================
        CLIENTES
     ============================================= */
     #clientes {
-      padding: 80px 0;
-      background: var(--bg-light);
+      padding: 88px 0;
+      background: var(--white);
     }
-    .clientes-header {
+    .clients-head {
       text-align: center;
-      margin-bottom: 52px;
+      margin-bottom: 56px;
     }
-    .clients-grid {
+    .clients-row {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
+      gap: 18px;
     }
-    .client-card {
+    .client-pill {
       background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 28px 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 160px;
-      box-shadow: var(--shadow-sm);
-      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
-    }
-    .client-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-      border-color: var(--orange);
-    }
-    .client-logo-text {
-      font-size: 1.1rem;
+      border: 1.5px solid rgba(0,95,97,.12);
+      border-radius: 100px;
+      padding: 16px 36px;
+      font-size: 1rem;
       font-weight: 700;
-      color: var(--steel);
+      color: var(--p7718);
       letter-spacing: .5px;
-      text-transform: uppercase;
-      transition: color var(--transition);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition);
     }
-    .client-card:hover .client-logo-text { color: var(--navy); }
+    .client-pill:hover {
+      border-color: var(--p3272);
+      color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
 
     /* =============================================
        CONTATO
     ============================================= */
     #contato {
-      padding: 96px 0;
-      background: var(--navy);
+      padding: 100px 0;
+      background: var(--primary);
       position: relative;
       overflow: hidden;
     }
@@ -621,211 +725,213 @@
       position: absolute;
       top: -100px; right: -100px;
       width: 500px; height: 500px;
-      border: 80px solid rgba(232,119,34,.08);
+      border: 80px solid rgba(0,175,160,.1);
       border-radius: 50%;
       pointer-events: none;
     }
-    .contato-inner {
+    #contato::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 380px; height: 380px;
+      border: 60px solid rgba(122,197,189,.08);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .contato-grid {
       display: grid;
       grid-template-columns: 1fr 1.2fr;
       gap: 72px;
       position: relative;
       z-index: 2;
     }
+
+    /* Info lado esquerdo */
     .contato-info .section-title { color: var(--white); }
-    .contato-info .section-subtitle { color: rgba(255,255,255,.6); }
-    .contact-items {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      margin-top: 36px;
-    }
-    .contact-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-    }
-    .contact-icon-wrap {
-      width: 44px;
-      height: 44px;
-      background: rgba(255,255,255,.08);
-      border-radius: 8px;
+    .contato-info .section-title::after { background: var(--p3272); }
+    .contato-info .section-sub { color: rgba(255,255,255,.6); margin-bottom: 36px; }
+
+    .contact-items { display: flex; flex-direction: column; gap: 22px; }
+    .contact-item { display: flex; align-items: flex-start; gap: 16px; }
+    .contact-icon {
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,.1);
+      border-radius: var(--radius);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
-    .contact-item-text strong {
-      display: block;
-      font-size: .8rem;
-      font-weight: 600;
-      text-transform: uppercase;
+    .contact-label {
+      font-size: .74rem;
+      font-weight: 700;
       letter-spacing: 1px;
-      color: var(--orange);
-      margin-bottom: 2px;
+      text-transform: uppercase;
+      color: var(--p3272);
+      margin-bottom: 3px;
     }
-    .contact-item-text span,
-    .contact-item-text a {
+    .contact-value {
       font-size: .95rem;
-      color: rgba(255,255,255,.8);
+      color: rgba(255,255,255,.82);
     }
-    .contact-item-text a:hover { color: var(--white); text-decoration: underline; }
+    .contact-value a { transition: color var(--transition); }
+    .contact-value a:hover { color: var(--white); text-decoration: underline; }
 
-    .whatsapp-btn-large {
-      margin-top: 36px;
+    .wa-btn {
       display: inline-flex;
       align-items: center;
       gap: 10px;
+      margin-top: 36px;
       background: #25D366;
       color: var(--white);
-      padding: 14px 28px;
-      border-radius: var(--radius);
-      font-weight: 600;
-      font-size: .95rem;
-      box-shadow: 0 4px 16px rgba(37,211,102,.3);
-      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      padding: 14px 26px;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: .93rem;
+      box-shadow: 0 4px 20px rgba(37,211,102,.35);
+      transition: all var(--transition);
     }
-    .whatsapp-btn-large:hover {
-      background: #1ebe5a;
+    .wa-btn:hover {
+      background: #1fb858;
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(37,211,102,.4);
+      box-shadow: 0 8px 28px rgba(37,211,102,.45);
     }
 
     /* Formulário */
-    .contact-form-wrap {
+    .form-card {
       background: var(--white);
-      border-radius: 12px;
+      border-radius: var(--radius-lg);
       padding: 44px 40px;
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--shadow-lg);
     }
-    .form-title {
+    .form-card-title {
       font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 6px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
     }
-    .form-sub {
-      font-size: .88rem;
-      color: var(--steel-lt);
+    .form-card-sub {
+      font-size: .86rem;
+      color: var(--cgray);
       margin-bottom: 28px;
     }
-    .form-group {
-      margin-bottom: 18px;
-    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 16px; }
     .form-group label {
       display: block;
-      font-size: .82rem;
-      font-weight: 600;
-      color: var(--steel);
-      margin-bottom: 6px;
+      font-size: .75rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: .5px;
+      letter-spacing: .7px;
+      color: var(--p7718);
+      margin-bottom: 6px;
     }
     .form-group input,
     .form-group textarea,
     .form-group select {
       width: 100%;
       padding: 12px 14px;
-      border: 1.5px solid var(--border);
+      border: 1.5px solid rgba(0,95,97,.15);
       border-radius: var(--radius);
       font-family: inherit;
       font-size: .93rem;
-      color: var(--text);
+      color: var(--dark);
       background: var(--white);
-      transition: border-color var(--transition), box-shadow var(--transition);
       outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
       appearance: none;
     }
     .form-group input:focus,
     .form-group textarea:focus,
     .form-group select:focus {
-      border-color: var(--orange);
-      box-shadow: 0 0 0 3px rgba(232,119,34,.12);
+      border-color: var(--p3272);
+      box-shadow: 0 0 0 3px rgba(0,175,160,.12);
     }
-    .form-group input.error,
-    .form-group textarea.error {
-      border-color: #e53e3e;
-    }
-    .error-msg {
-      font-size: .78rem;
+    .form-group input.is-error,
+    .form-group textarea.is-error { border-color: #e53e3e; }
+    .field-error {
+      display: none;
+      font-size: .76rem;
       color: #e53e3e;
       margin-top: 4px;
-      display: none;
     }
-    .error-msg.visible { display: block; }
-    .form-group textarea { resize: vertical; min-height: 110px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field-error.show { display: block; }
+    .form-group textarea { resize: vertical; min-height: 108px; }
+
     .form-submit {
       width: 100%;
       padding: 14px;
-      background: var(--orange);
+      background: var(--primary);
       color: var(--white);
-      font-size: 1rem;
-      font-weight: 600;
-      border-radius: var(--radius);
-      transition: background var(--transition), transform var(--transition);
+      font-size: .97rem;
+      font-weight: 700;
+      border-radius: 100px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      transition: all var(--transition);
     }
     .form-submit:hover {
-      background: var(--orange-dk);
+      background: var(--p7717);
       transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,95,97,.3);
     }
     .form-success {
       display: none;
       text-align: center;
-      padding: 24px;
-      color: #276749;
-      background: #c6f6d5;
+      padding: 18px;
+      background: rgba(0,175,160,.1);
+      border: 1.5px solid rgba(0,175,160,.3);
       border-radius: var(--radius);
-      margin-top: 16px;
-      font-weight: 500;
+      color: var(--p7717);
+      font-weight: 600;
+      font-size: .92rem;
+      margin-top: 14px;
     }
-    .form-success.visible { display: block; }
+    .form-success.show { display: block; }
 
     /* =============================================
        FOOTER
     ============================================= */
     #footer {
-      background: #081529;
-      padding: 60px 0 28px;
+      background: #0E1A1A;
+      padding: 64px 0 28px;
     }
-    .footer-inner {
+    .footer-grid {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr;
       gap: 48px;
       padding-bottom: 40px;
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255,255,255,.07);
     }
-    .footer-brand .logo-text strong { font-size: 1rem; }
+    .footer-brand .nav-logo img,
+    .footer-brand .logo-svg-fallback { filter: brightness(0) invert(1); opacity: .9; }
+
     .footer-desc {
-      font-size: .88rem;
-      color: rgba(255,255,255,.45);
-      line-height: 1.7;
-      margin-top: 16px;
+      font-size: .87rem;
+      color: rgba(255,255,255,.35);
+      line-height: 1.75;
+      margin-top: 18px;
       max-width: 280px;
     }
     .footer-col-title {
-      font-size: .8rem;
+      font-size: .73rem;
       font-weight: 700;
-      text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: var(--orange);
-      margin-bottom: 20px;
+      text-transform: uppercase;
+      color: var(--p3272);
+      margin-bottom: 18px;
     }
-    .footer-links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
     .footer-links a {
-      font-size: .88rem;
-      color: rgba(255,255,255,.5);
+      font-size: .87rem;
+      color: rgba(255,255,255,.42);
       transition: color var(--transition);
     }
-    .footer-links a:hover { color: var(--white); }
+    .footer-links a:hover { color: rgba(255,255,255,.85); }
     .footer-bottom {
       display: flex;
       align-items: center;
@@ -834,52 +940,39 @@
       flex-wrap: wrap;
       gap: 12px;
     }
-    .footer-copy {
-      font-size: .82rem;
-      color: rgba(255,255,255,.3);
-    }
-    .footer-phone {
-      font-size: .88rem;
-      color: rgba(255,255,255,.5);
-    }
-    .footer-phone a {
-      color: var(--orange);
-      font-weight: 600;
-    }
+    .footer-copy { font-size: .8rem; color: rgba(255,255,255,.25); }
+    .footer-tel  { font-size: .85rem; color: rgba(255,255,255,.38); }
+    .footer-tel a { color: var(--p3272); font-weight: 600; }
 
     /* =============================================
        WHATSAPP FLUTUANTE
     ============================================= */
-    .whatsapp-float {
+    .wa-float {
       position: fixed;
-      bottom: 28px;
-      right: 28px;
+      bottom: 28px; right: 28px;
       z-index: 999;
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    .whatsapp-float-bubble {
+    .wa-float-tooltip {
       background: var(--white);
-      color: var(--navy);
-      font-size: .82rem;
-      font-weight: 600;
+      border: 1.5px solid rgba(0,95,97,.1);
+      color: var(--primary);
+      font-size: .8rem;
+      font-weight: 700;
       padding: 8px 14px;
       border-radius: 100px;
       box-shadow: var(--shadow-md);
       white-space: nowrap;
       opacity: 0;
-      transform: translateX(10px);
-      transition: opacity .3s, transform .3s;
+      transform: translateX(8px);
+      transition: opacity var(--transition), transform var(--transition);
       pointer-events: none;
     }
-    .whatsapp-float:hover .whatsapp-float-bubble {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    .whatsapp-float-btn {
-      width: 58px;
-      height: 58px;
+    .wa-float:hover .wa-float-tooltip { opacity: 1; transform: translateX(0); }
+    .wa-float-btn {
+      width: 58px; height: 58px;
       background: #25D366;
       border-radius: 50%;
       display: flex;
@@ -888,39 +981,30 @@
       box-shadow: 0 4px 20px rgba(37,211,102,.45);
       transition: transform var(--transition), box-shadow var(--transition);
       flex-shrink: 0;
+      position: relative;
     }
-    .whatsapp-float-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 8px 28px rgba(37,211,102,.55);
-    }
-    /* Ping animation */
-    .whatsapp-float-btn::before {
+    .wa-float-btn:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(37,211,102,.55); }
+    .wa-float-btn::before {
       content: '';
       position: absolute;
-      width: 58px;
-      height: 58px;
+      width: 100%; height: 100%;
       background: rgba(37,211,102,.4);
       border-radius: 50%;
-      animation: ping 2s ease-out infinite;
+      animation: wa-ping 2.2s ease-out infinite;
     }
-    @keyframes ping {
-      0%   { transform: scale(1);   opacity: 1; }
-      70%  { transform: scale(1.6); opacity: 0; }
-      100% { transform: scale(1.6); opacity: 0; }
+    @keyframes wa-ping {
+      0%   { transform: scale(1);   opacity: .8; }
+      70%  { transform: scale(1.65); opacity: 0; }
+      100% { transform: scale(1.65); opacity: 0; }
     }
 
-    /* =============================================
-       SCROLL TO TOP
-    ============================================= */
+    /* Scroll top */
     .scroll-top {
       position: fixed;
-      bottom: 96px;
-      right: 30px;
-      width: 42px;
-      height: 42px;
-      background: var(--navy-mid);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 8px;
+      bottom: 100px; right: 30px;
+      width: 40px; height: 40px;
+      background: var(--p7717);
+      border-radius: var(--radius);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -928,100 +1012,111 @@
       z-index: 998;
       opacity: 0;
       pointer-events: none;
-      transition: opacity var(--transition), transform var(--transition);
-      transform: translateY(10px);
+      transform: translateY(8px);
+      transition: all var(--transition);
     }
-    .scroll-top.visible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
-    }
-    .scroll-top:hover { background: var(--orange); }
+    .scroll-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .scroll-top:hover { background: var(--primary); }
 
     /* =============================================
        RESPONSIVE
     ============================================= */
     @media (max-width: 1024px) {
-      .services-grid { grid-template-columns: repeat(2, 1fr); }
-      .about-inner { gap: 48px; }
-      .footer-inner { grid-template-columns: 1fr 1fr; }
-      .footer-brand { grid-column: span 2; }
+      .services-grid { grid-template-columns: repeat(2,1fr); }
+      .about-grid    { gap: 48px; }
+      .footer-grid   { grid-template-columns: 1fr 1fr; }
+      .footer-brand  { grid-column: span 2; }
+      .float-badge.left-1, .float-badge.left-2,
+      .float-badge.right-1, .float-badge.right-2 { display: none; }
     }
 
     @media (max-width: 768px) {
       .nav-links, .nav-cta { display: none; }
-      .nav-hamburger { display: flex; }
+      .hamburger { display: flex; }
 
-      .hero-title { font-size: 2.2rem; }
-      .hero-stats { gap: 28px; }
+      .hero-title { letter-spacing: -.5px; }
+      .hero-cta-group { flex-direction: column; align-items: center; }
+      .hero-cta-group .btn { width: 100%; max-width: 300px; justify-content: center; }
 
       .services-grid { grid-template-columns: 1fr; }
 
-      .about-inner { grid-template-columns: 1fr; }
-      .about-visual { order: -1; }
-      .about-badge { bottom: -10px; right: 0; }
+      .about-grid    { grid-template-columns: 1fr; }
+      .about-visual-wrap { order: -1; }
+      .about-float-badge { bottom: -10px; right: 0; }
 
-      .contato-inner { grid-template-columns: 1fr; gap: 40px; }
-      .contact-form-wrap { padding: 32px 24px; }
-      .form-row { grid-template-columns: 1fr; }
+      .contato-grid  { grid-template-columns: 1fr; gap: 40px; }
+      .form-card     { padding: 32px 22px; }
+      .form-row      { grid-template-columns: 1fr; }
 
-      .footer-inner { grid-template-columns: 1fr; }
-      .footer-brand { grid-column: span 1; }
+      .footer-grid   { grid-template-columns: 1fr; }
+      .footer-brand  { grid-column: span 1; }
 
-      .strip-inner { gap: 20px; }
-
-      .section-title { font-size: 1.65rem; }
+      .strip-grid    { flex-direction: row; gap: 0; }
+      .strip-stat    { padding: 10px 16px; }
+      .strip-stat strong { font-size: 1.6rem; }
     }
 
     @media (max-width: 480px) {
-      .hero-actions { flex-direction: column; }
-      .hero-actions .btn { width: 100%; justify-content: center; }
+      .strip-grid { gap: 0; }
+      .strip-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,.12); }
+      .strip-stat:last-child { border-bottom: none; }
+      .wa-float { bottom: 20px; right: 18px; }
       .footer-bottom { flex-direction: column; align-items: flex-start; }
-      .whatsapp-float { bottom: 20px; right: 20px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- =============================================
-       HEADER
-  ============================================= -->
+  <!-- ===========================================
+       HEADER – fixo, branco
+  =========================================== -->
   <header id="header">
     <div class="container">
       <nav class="nav-inner">
 
-        <!-- Logo -->
+        <!-- LOGO
+             Coloque o arquivo LogoPNG_28x15.png (ou logo.png) na raiz do projeto.
+             O SVG abaixo é exibido como fallback caso o PNG não seja encontrado.
+        -->
         <a href="#hero" class="nav-logo" aria-label="Metalúrgica Paranaguá – Início">
-          <!-- SVG Logomarca MP -->
-          <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect width="44" height="44" rx="8" fill="#E87722"/>
-            <path d="M7 32V13h4.2l6.3 11.8L23.8 13H28v19h-4V20.2l-5.4 10.2h-2.2L11 20.2V32H7z" fill="white"/>
-            <path d="M30 32V13h8.5c2 0 3.5.5 4.5 1.5s1.5 2.3 1.5 3.9c0 1.6-.5 2.9-1.5 3.9s-2.5 1.5-4.5 1.5H34V32h-4zm4-11.2h4c.8 0 1.4-.2 1.8-.6.4-.4.6-.9.6-1.6s-.2-1.2-.6-1.6c-.4-.4-1-.6-1.8-.6H34v4.4z" fill="white"/>
+          <img
+            src="logo.png"
+            alt="Metalúrgica Paranaguá"
+            height="44"
+            onerror="this.setAttribute('data-error','1'); this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          />
+          <!-- SVG fallback baseado na identidade visual -->
+          <svg class="logo-svg-fallback" style="display:none" height="44" viewBox="0 0 260 110" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Quadro -->
+            <rect x="3" y="3" width="88" height="88" stroke="#005F61" stroke-width="5.5"/>
+            <!-- M geométrico (estilizado) -->
+            <path d="M14 86 L14 22 L44 60 L74 22 L74 86" stroke="#005F61" stroke-width="11" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+            <!-- P (sobrepõe borda direita) -->
+            <line x1="80" y1="86" x2="80" y2="18" stroke="#007E79" stroke-width="10" stroke-linecap="round"/>
+            <path d="M80 18 Q115 18 115 44 Q115 70 80 70" stroke="#007E79" stroke-width="9" stroke-linecap="round" fill="none"/>
+            <!-- Texto -->
+            <text x="128" y="50" font-family="Roboto,sans-serif" font-weight="800" font-size="24" fill="#005F61">Metalúrgica</text>
+            <text x="128" y="80" font-family="Roboto,sans-serif" font-weight="800" font-size="24" fill="#005F61">Paranaguá</text>
           </svg>
-          <div class="logo-text">
-            <strong>Metalúrgica Paranaguá</strong>
-            <span>Indústria &amp; Engenharia</span>
-          </div>
         </a>
 
-        <!-- Links desktop -->
+        <!-- Links -->
         <ul class="nav-links" role="navigation" aria-label="Menu principal">
-          <li><a href="#hero" class="active">Home</a></li>
+          <li><a href="#hero"     class="active">Home</a></li>
           <li><a href="#servicos">Serviços</a></li>
           <li><a href="#sobre">Sobre</a></li>
           <li><a href="#clientes">Clientes</a></li>
           <li><a href="#contato">Contato</a></li>
         </ul>
 
-        <a href="#contato" class="btn btn-primary nav-cta">Solicitar Orçamento</a>
+        <a href="#contato" class="btn btn-primary nav-cta" aria-label="Solicitar orçamento">Solicitar Orçamento</a>
 
-        <!-- Hamburger mobile -->
-        <button class="nav-hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+        <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </nav>
 
-      <!-- Mobile menu -->
+      <!-- Menu mobile -->
       <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Menu mobile">
         <a href="#hero">Home</a>
         <a href="#servicos">Serviços</a>
@@ -1033,195 +1128,210 @@
     </div>
   </header>
 
-  <!-- =============================================
-       HERO
-  ============================================= -->
+  <!-- ===========================================
+       HERO – estilo moderno inspirado no Tasker
+  =========================================== -->
   <section id="hero">
-    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-grid-lines" aria-hidden="true"></div>
+
+    <!-- Floating badges industriais -->
+    <div class="float-badge left-1"  aria-hidden="true">⚙ Usinagem CNC</div>
+    <div class="float-badge left-2"  aria-hidden="true">🔩 ISO 9001</div>
+    <div class="float-badge right-1" aria-hidden="true">🚢 Porto de Paranaguá</div>
+    <div class="float-badge right-2" aria-hidden="true">+30 anos de experiência</div>
+
     <div class="container">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <span></span>
-          Paranaguá, Paraná · Desde 1992
-        </div>
-        <h1 class="hero-title">
-          Soluções sob Medida<br>
-          em <em>Mecânica Industrial</em>
-        </h1>
-        <p class="hero-sub">
-          Engenharia, fabricação e serviços especializados para a indústria.
-          Do projeto à entrega, com precisão e compromisso.
-        </p>
-        <div class="hero-actions">
-          <a href="#contato" class="btn btn-primary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            Fale com a gente
-          </a>
-          <a href="#servicos" class="btn btn-outline">
-            Nossos Serviços
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-          </a>
-        </div>
-        <div class="hero-stats" aria-label="Números da empresa">
-          <div class="stat">
-            <strong>+30</strong>
-            <span>Anos de experiência</span>
+      <div class="hero-inner">
+        <div class="hero-content">
+
+          <!-- Badge topo (como "Ranked #1" do Tasker) -->
+          <div class="hero-ranked">
+            <div class="hero-ranked-dot"></div>
+            Referência em metalurgia no litoral do Paraná
           </div>
-          <div class="stat">
-            <strong>+500</strong>
-            <span>Projetos entregues</span>
+
+          <!-- Título grande -->
+          <h1 class="hero-title">
+            Soluções sob Medida em<br>
+            <span class="accent">Mecânica Industrial</span>
+          </h1>
+
+          <p class="hero-sub">
+            Engenharia, fabricação e serviços especializados para a indústria.
+            Do projeto à entrega, com precisão e comprometimento.
+          </p>
+
+          <!-- CTAs -->
+          <div class="hero-cta-group">
+            <a href="#contato" class="btn btn-primary">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Fale com a gente
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a href="#servicos" class="btn btn-outline">
+              Nossos Serviços
+            </a>
           </div>
-          <div class="stat">
-            <strong>5</strong>
-            <span>Clientes âncora</span>
+
+          <!-- Trust bar (como "No credit card required" do Tasker) -->
+          <div class="hero-trust">
+            <div class="trust-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Equipe técnica própria
+            </div>
+            <div class="trust-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Orçamento sem compromisso
+            </div>
+            <div class="trust-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Atendimento ágil via WhatsApp
+            </div>
           </div>
+
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Strip de diferenciais -->
-  <div id="about-strip" aria-label="Diferenciais">
+  <!-- Strip de estatísticas -->
+  <div id="strip" aria-label="Números da empresa">
     <div class="container">
-      <div class="strip-inner">
-        <div class="strip-item">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Qualidade certificada
+      <div class="strip-grid">
+        <div class="strip-stat">
+          <strong>+30</strong>
+          <span>Anos de mercado</span>
         </div>
-        <div class="strip-item">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Prazos cumpridos
+        <div class="strip-stat">
+          <strong>+500</strong>
+          <span>Projetos entregues</span>
         </div>
-        <div class="strip-item">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          Equipe especializada
+        <div class="strip-stat">
+          <strong>5</strong>
+          <span>Clientes âncora</span>
         </div>
-        <div class="strip-item">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-          Atendimento local e regional
+        <div class="strip-stat">
+          <strong>100%</strong>
+          <span>Equipe própria</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- =============================================
+  <!-- ===========================================
        SERVIÇOS
-  ============================================= -->
+  =========================================== -->
   <section id="servicos">
     <div class="container">
-      <div class="services-header">
-        <p class="hero-badge" style="display:inline-flex;margin-bottom:16px;background:rgba(232,119,34,.08);border-color:rgba(232,119,34,.25);">
-          <span style="width:6px;height:6px;background:var(--orange);border-radius:50%;display:inline-block;"></span>
-          O que fazemos
-        </p>
+      <div class="services-head">
+        <div class="section-label">O que fazemos</div>
         <h2 class="section-title">Nossos Serviços</h2>
-        <p class="section-subtitle">
-          Soluções industriais completas, da concepção ao acabamento, com excelência técnica e comprometimento.
+        <p class="section-sub" style="max-width:520px;">
+          Soluções industriais completas, da concepção ao acabamento, com excelência técnica e comprometimento em cada etapa.
         </p>
       </div>
 
       <div class="services-grid">
 
-        <!-- 1. Engenharia e Projeto -->
-        <article class="service-card">
-          <div class="service-icon" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E87722" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- 1 -->
+        <article class="svc-card">
+          <div class="svc-icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00AFA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
             </svg>
           </div>
-          <h3 class="service-name">Engenharia e Projeto</h3>
-          <p class="service-desc">
-            Desenvolvimento de projetos mecânicos e estruturais sob medida, utilizando software CAD/CAM de última geração. Nossa equipe transforma especificações técnicas em soluções viáveis, seguras e economicamente eficientes para cada aplicação industrial.
+          <h3 class="svc-name">Engenharia e Projeto</h3>
+          <p class="svc-desc">
+            Desenvolvimento de projetos mecânicos e estruturais sob medida com CAD/CAM de última geração. Transformamos especificações técnicas em soluções viáveis, seguras e economicamente eficientes para cada aplicação industrial.
           </p>
-          <a href="#contato" class="service-link">
+          <a href="#contato" class="svc-link">
             Saiba mais
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
         </article>
 
-        <!-- 2. Fabricação e Usinagem -->
-        <article class="service-card">
-          <div class="service-icon" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E87722" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- 2 -->
+        <article class="svc-card">
+          <div class="svc-icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00AFA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
             </svg>
           </div>
-          <h3 class="service-name">Fabricação e Usinagem</h3>
-          <p class="service-desc">
-            Fabricação de peças e componentes metálicos com alta precisão dimensional, utilizando tornos CNC, fresadoras e equipamentos de corte modernos. Trabalhamos com aço carbono, inox e ligas especiais para atender as demandas mais exigentes da indústria.
+          <h3 class="svc-name">Fabricação e Usinagem</h3>
+          <p class="svc-desc">
+            Fabricação de peças e componentes metálicos com alta precisão dimensional em tornos CNC, fresadoras e equipamentos de corte modernos. Aço carbono, inox e ligas especiais para as demandas mais exigentes da indústria.
           </p>
-          <a href="#contato" class="service-link">
+          <a href="#contato" class="svc-link">
             Saiba mais
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
         </article>
 
-        <!-- 3. Montagem Industrial -->
-        <article class="service-card">
-          <div class="service-icon" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E87722" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- 3 -->
+        <article class="svc-card">
+          <div class="svc-icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00AFA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
             </svg>
           </div>
-          <h3 class="service-name">Montagem Industrial</h3>
-          <p class="service-desc">
-            Execução de montagens eletromecânicas, estruturas metálicas e equipamentos industriais em campo ou em nossa oficina. Contamos com equipe técnica qualificada e todos os recursos para montagens seguras, dentro do prazo e conforme normas vigentes.
+          <h3 class="svc-name">Montagem Industrial</h3>
+          <p class="svc-desc">
+            Montagens eletromecânicas, estruturas metálicas e equipamentos industriais em campo ou em oficina. Equipe técnica qualificada para montagens seguras dentro do prazo e conforme normas vigentes.
           </p>
-          <a href="#contato" class="service-link">
+          <a href="#contato" class="svc-link">
             Saiba mais
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
         </article>
 
-        <!-- 4. Jateamento e Pintura -->
-        <article class="service-card">
-          <div class="service-icon" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E87722" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- 4 -->
+        <article class="svc-card">
+          <div class="svc-icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00AFA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
             </svg>
           </div>
-          <h3 class="service-name">Jateamento e Pintura</h3>
-          <p class="service-desc">
-            Tratamento de superfícies com jateamento abrasivo e aplicação de sistemas de pintura anticorrosiva, conforme especificações SSPC e NACE. Garantimos aderência, durabilidade e proteção adequados ao ambiente industrial agressivo do Complexo Portuário de Paranaguá.
+          <h3 class="svc-name">Jateamento e Pintura</h3>
+          <p class="svc-desc">
+            Tratamento de superfícies com jateamento abrasivo e sistemas de pintura anticorrosiva (SSPC/NACE). Aderência, durabilidade e proteção ideais para o ambiente industrial e portuário agressivo de Paranaguá.
           </p>
-          <a href="#contato" class="service-link">
+          <a href="#contato" class="svc-link">
             Saiba mais
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
         </article>
 
-        <!-- 5. Manutenção Industrial -->
-        <article class="service-card">
-          <div class="service-icon" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E87722" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-              <line x1="3" y1="3" x2="5" y2="5" style="display:none"/>
+        <!-- 5 -->
+        <article class="svc-card">
+          <div class="svc-icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00AFA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
             </svg>
           </div>
-          <h3 class="service-name">Manutenção Industrial</h3>
-          <p class="service-desc">
-            Serviços de manutenção preventiva e corretiva em equipamentos, estruturas e instalações industriais. Atuamos com agilidade para minimizar paradas não programadas, garantindo a continuidade operacional e prolongando a vida útil dos ativos das empresas clientes.
+          <h3 class="svc-name">Manutenção Industrial</h3>
+          <p class="svc-desc">
+            Manutenção preventiva e corretiva em equipamentos, estruturas e instalações industriais. Atuamos com agilidade para minimizar paradas não programadas e prolongar a vida útil dos ativos das empresas clientes.
           </p>
-          <a href="#contato" class="service-link">
+          <a href="#contato" class="svc-link">
             Saiba mais
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
         </article>
 
-        <!-- 6. Aluguel de Equipamentos -->
-        <article class="service-card">
-          <div class="service-icon" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E87722" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- 6 -->
+        <article class="svc-card">
+          <div class="svc-icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00AFA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
             </svg>
           </div>
-          <h3 class="service-name">Aluguel de Equipamentos</h3>
-          <p class="service-desc">
-            Disponibilizamos equipamentos industriais para locação — andaimes, plataformas elevatórias, ferramentas especiais e mais — com suporte técnico e operadores qualificados quando necessário. Flexibilidade para atender projetos pontuais ou contratos de longa duração.
+          <h3 class="svc-name">Aluguel de Equipamentos</h3>
+          <p class="svc-desc">
+            Locação de equipamentos industriais — andaimes, plataformas elevatórias, ferramentas especiais — com suporte técnico e operadores qualificados. Flexibilidade para projetos pontuais ou contratos de longa duração.
           </p>
-          <a href="#contato" class="service-link">
+          <a href="#contato" class="svc-link">
             Saiba mais
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
         </article>
 
@@ -1229,44 +1339,43 @@
     </div>
   </section>
 
-  <!-- =============================================
+  <!-- ===========================================
        SOBRE
-  ============================================= -->
+  =========================================== -->
   <section id="sobre">
     <div class="container">
-      <div class="about-inner">
+      <div class="about-grid">
 
-        <!-- Visual/gráfico -->
-        <div class="about-visual">
-          <div class="about-graphic">
-            <div class="about-graphic-title">Nossa Essência</div>
-            <div class="about-graphic-sub">O que nos move todos os dias</div>
-            <div class="about-values">
-              <div class="about-value">
-                <div class="value-dot"></div>
-                <div class="value-text">
+        <!-- Visual -->
+        <div class="about-visual-wrap">
+          <div class="about-card-main">
+            <div class="about-card-title">Nossa Essência</div>
+            <div class="about-card-sub">O que nos move a cada projeto</div>
+            <ul class="mvv-list" aria-label="Missão, Visão e Valores">
+              <li class="mvv-item">
+                <div class="mvv-dot"></div>
+                <div>
                   <strong>Missão</strong>
                   <span>Oferecer soluções industriais de excelência, com segurança, qualidade e respeito aos prazos.</span>
                 </div>
-              </div>
-              <div class="about-value">
-                <div class="value-dot"></div>
-                <div class="value-text">
+              </li>
+              <li class="mvv-item">
+                <div class="mvv-dot"></div>
+                <div>
                   <strong>Visão</strong>
                   <span>Ser referência em serviços metalúrgicos e de engenharia no Litoral do Paraná.</span>
                 </div>
-              </div>
-              <div class="about-value">
-                <div class="value-dot"></div>
-                <div class="value-text">
+              </li>
+              <li class="mvv-item">
+                <div class="mvv-dot"></div>
+                <div>
                   <strong>Valores</strong>
                   <span>Ética, comprometimento, inovação contínua e valorização das pessoas.</span>
                 </div>
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
-          <!-- Badge flutuante de experiência -->
-          <div class="about-badge" aria-label="Mais de 30 anos de experiência">
+          <div class="about-float-badge" aria-label="Mais de 30 anos">
             <strong>+30</strong>
             <span>anos de<br>experiência</span>
           </div>
@@ -1274,34 +1383,35 @@
 
         <!-- Texto -->
         <div class="about-text">
+          <div class="section-label">Quem somos</div>
           <h2 class="section-title">Sobre a Metalúrgica Paranaguá</h2>
-          <p class="section-subtitle" style="margin-bottom:28px;">
+          <p class="section-sub" style="margin-bottom:24px;">
             Tradição e inovação a serviço da indústria paranaense.
           </p>
           <p class="about-body">
             Fundada em Paranaguá, no coração do maior complexo portuário da América do Sul, a Metalúrgica Paranaguá LTDA nasceu para atender a demanda crescente por serviços industriais de alta qualidade na região. Em mais de três décadas de atuação, construímos uma trajetória sólida baseada na entrega consistente de resultados.
           </p>
           <p class="about-body">
-            Atendemos grandes empresas do agronegócio, petroquímica e logística portuária, sempre com equipe própria, equipamentos modernos e um rigoroso controle de qualidade. Nossa estrutura integrada — da concepção ao acabamento — nos permite assumir projetos complexos e entregá-los dentro do prazo e do orçamento.
+            Atendemos grandes empresas do agronegócio, petroquímica e logística portuária com equipe própria, equipamentos modernos e rigoroso controle de qualidade. Nossa estrutura integrada — da concepção ao acabamento — nos permite assumir projetos complexos entregando-os dentro do prazo e orçamento.
           </p>
-          <div class="about-checkmarks" aria-label="Diferenciais">
-            <div class="check-item">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <ul class="check-list" aria-label="Diferenciais">
+            <li class="check-item">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
               Equipe técnica própria e altamente qualificada
-            </div>
-            <div class="check-item">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </li>
+            <li class="check-item">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
               Oficina completa com maquinário de precisão CNC
-            </div>
-            <div class="check-item">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </li>
+            <li class="check-item">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
               Histórico comprovado com clientes líderes de mercado
-            </div>
-            <div class="check-item">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </li>
+            <li class="check-item">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
               Segurança do trabalho como prioridade absoluta
-            </div>
-          </div>
+            </li>
+          </ul>
           <a href="#contato" class="btn btn-primary">Entre em contato</a>
         </div>
 
@@ -1309,77 +1419,73 @@
     </div>
   </section>
 
-  <!-- =============================================
+  <!-- ===========================================
        CLIENTES
-  ============================================= -->
+  =========================================== -->
   <section id="clientes">
     <div class="container">
-      <div class="clientes-header">
-        <h2 class="section-title centered">Nossos Clientes</h2>
-        <p class="section-subtitle centered" style="margin-top:8px;">
-          Empresas líderes que confiam em nosso trabalho
+      <div class="clients-head">
+        <div class="section-label" style="text-align:center">Portfólio de clientes</div>
+        <h2 class="section-title centered">Empresas que confiam<br>em nosso trabalho</h2>
+        <p class="section-sub centered" style="margin-top:8px;max-width:480px;">
+          Atendemos as maiores operações industriais e portuárias do litoral paranaense.
         </p>
       </div>
-      <div class="clients-grid" role="list" aria-label="Clientes da Metalúrgica Paranaguá">
-        <div class="client-card" role="listitem">
-          <span class="client-logo-text">Bunge</span>
-        </div>
-        <div class="client-card" role="listitem">
-          <span class="client-logo-text">Yara</span>
-        </div>
-        <div class="client-card" role="listitem">
-          <span class="client-logo-text">Petrobras</span>
-        </div>
-        <div class="client-card" role="listitem">
-          <span class="client-logo-text">TCP</span>
-        </div>
-        <div class="client-card" role="listitem">
-          <span class="client-logo-text">Mosaic</span>
-        </div>
+      <div class="clients-row" role="list" aria-label="Clientes">
+        <div class="client-pill" role="listitem">Bunge</div>
+        <div class="client-pill" role="listitem">Yara</div>
+        <div class="client-pill" role="listitem">Petrobras</div>
+        <div class="client-pill" role="listitem">TCP</div>
+        <div class="client-pill" role="listitem">Mosaic</div>
       </div>
     </div>
   </section>
 
-  <!-- =============================================
+  <!-- ===========================================
        CONTATO
-  ============================================= -->
+  =========================================== -->
   <section id="contato">
     <div class="container">
-      <div class="contato-inner">
+      <div class="contato-grid">
 
-        <!-- Info -->
+        <!-- Informações -->
         <div class="contato-info">
-          <h2 class="section-title">Fale com<br>nossa equipe</h2>
-          <p class="section-subtitle">
+          <div class="section-label" style="color:var(--p563)">Fale conosco</div>
+          <h2 class="section-title">Vamos resolver<br>juntos</h2>
+          <p class="section-sub">
             Estamos prontos para entender seu desafio e apresentar a melhor solução industrial para o seu negócio.
           </p>
 
           <div class="contact-items">
             <div class="contact-item">
-              <div class="contact-icon-wrap" aria-hidden="true">
+              <div class="contact-icon" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.64 3.27 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.77-.77a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
               </div>
-              <div class="contact-item-text">
-                <strong>Telefone / WhatsApp</strong>
-                <a href="https://wa.me/554134226670" target="_blank" rel="noopener noreferrer">(41) 3422-6670</a>
+              <div>
+                <div class="contact-label">Telefone / WhatsApp</div>
+                <div class="contact-value">
+                  <a href="https://wa.me/554134226670" target="_blank" rel="noopener noreferrer">(41) 3422-6670</a>
+                </div>
               </div>
             </div>
             <div class="contact-item">
-              <div class="contact-icon-wrap" aria-hidden="true">
+              <div class="contact-icon" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
               </div>
-              <div class="contact-item-text">
-                <strong>E-mail</strong>
-                <a href="mailto:contato@metalurgicaparanagua.com.br">contato@metalurgicaparanagua.com.br</a>
+              <div>
+                <div class="contact-label">E-mail</div>
+                <div class="contact-value">
+                  <a href="mailto:contato@metalurgicaparanagua.com.br">contato@metalurgicaparanagua.com.br</a>
+                </div>
               </div>
             </div>
             <div class="contact-item">
-              <div class="contact-icon-wrap" aria-hidden="true">
+              <div class="contact-icon" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               </div>
-              <div class="contact-item-text">
-                <strong>Localização</strong>
-                <span>Paranaguá, Paraná – Brasil</span>
+              <div>
+                <div class="contact-label">Localização</div>
+                <div class="contact-value">Paranaguá, Paraná – Brasil</div>
               </div>
             </div>
           </div>
@@ -1388,10 +1494,9 @@
             href="https://wa.me/554134226670?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento."
             target="_blank"
             rel="noopener noreferrer"
-            class="whatsapp-btn-large"
+            class="wa-btn"
             aria-label="Chamar no WhatsApp"
           >
-            <!-- WhatsApp icon -->
             <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
             </svg>
@@ -1400,16 +1505,16 @@
         </div>
 
         <!-- Formulário -->
-        <div class="contact-form-wrap">
-          <div class="form-title">Solicite um Orçamento</div>
-          <div class="form-sub">Preencha os dados abaixo e retornamos em até 24h.</div>
+        <div class="form-card">
+          <div class="form-card-title">Solicite um Orçamento</div>
+          <div class="form-card-sub">Preencha abaixo — retornamos em até 24h.</div>
 
           <form id="contactForm" novalidate>
             <div class="form-row">
               <div class="form-group">
                 <label for="nome">Nome *</label>
                 <input type="text" id="nome" name="nome" placeholder="Seu nome completo" autocomplete="name" />
-                <div class="error-msg" id="nome-error">Por favor, informe seu nome.</div>
+                <div class="field-error" id="nome-err">Informe seu nome.</div>
               </div>
               <div class="form-group">
                 <label for="empresa">Empresa</label>
@@ -1419,13 +1524,13 @@
             <div class="form-row">
               <div class="form-group">
                 <label for="email">E-mail *</label>
-                <input type="email" id="email" name="email" placeholder="seuemail@empresa.com" autocomplete="email" />
-                <div class="error-msg" id="email-error">Informe um e-mail válido.</div>
+                <input type="email" id="email" name="email" placeholder="email@empresa.com" autocomplete="email" />
+                <div class="field-error" id="email-err">E-mail inválido.</div>
               </div>
               <div class="form-group">
-                <label for="telefone">Telefone *</label>
-                <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" autocomplete="tel" />
-                <div class="error-msg" id="telefone-error">Informe seu telefone.</div>
+                <label for="tel">Telefone *</label>
+                <input type="tel" id="tel" name="tel" placeholder="(00) 00000-0000" autocomplete="tel" />
+                <div class="field-error" id="tel-err">Informe seu telefone.</div>
               </div>
             </div>
             <div class="form-group">
@@ -1442,16 +1547,16 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="mensagem">Mensagem *</label>
-              <textarea id="mensagem" name="mensagem" placeholder="Descreva brevemente o que você precisa..."></textarea>
-              <div class="error-msg" id="mensagem-error">Por favor, escreva sua mensagem.</div>
+              <label for="msg">Mensagem *</label>
+              <textarea id="msg" name="msg" placeholder="Descreva o que você precisa..."></textarea>
+              <div class="field-error" id="msg-err">Escreva sua mensagem.</div>
             </div>
             <button type="submit" class="form-submit">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
               Enviar Mensagem
             </button>
-            <div class="form-success" id="formSuccess" role="alert">
-              ✓ Mensagem enviada com sucesso! Entraremos em contato em breve.
+            <div class="form-success" id="formOk" role="alert">
+              ✓ Mensagem enviada! Entraremos em contato em breve.
             </div>
           </form>
         </div>
@@ -1460,24 +1565,29 @@
     </div>
   </section>
 
-  <!-- =============================================
+  <!-- ===========================================
        FOOTER
-  ============================================= -->
+  =========================================== -->
   <footer id="footer">
     <div class="container">
-      <div class="footer-inner">
+      <div class="footer-grid">
         <!-- Marca -->
         <div class="footer-brand">
           <a href="#hero" class="nav-logo" aria-label="Voltar ao topo">
-            <svg width="38" height="38" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect width="44" height="44" rx="8" fill="#E87722"/>
-              <path d="M7 32V13h4.2l6.3 11.8L23.8 13H28v19h-4V20.2l-5.4 10.2h-2.2L11 20.2V32H7z" fill="white"/>
-              <path d="M30 32V13h8.5c2 0 3.5.5 4.5 1.5s1.5 2.3 1.5 3.9c0 1.6-.5 2.9-1.5 3.9s-2.5 1.5-4.5 1.5H34V32h-4zm4-11.2h4c.8 0 1.4-.2 1.8-.6.4-.4.6-.9.6-1.6s-.2-1.2-.6-1.6c-.4-.4-1-.6-1.8-.6H34v4.4z" fill="white"/>
+            <img
+              src="logo.png"
+              alt="Metalúrgica Paranaguá"
+              height="40"
+              onerror="this.setAttribute('data-error','1'); this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+            <svg class="logo-svg-fallback" style="display:none;filter:brightness(0) invert(1);opacity:.85" height="40" viewBox="0 0 260 110" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="3" y="3" width="88" height="88" stroke="white" stroke-width="5.5"/>
+              <path d="M14 86 L14 22 L44 60 L74 22 L74 86" stroke="white" stroke-width="11" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+              <line x1="80" y1="86" x2="80" y2="18" stroke="white" stroke-width="10" stroke-linecap="round"/>
+              <path d="M80 18 Q115 18 115 44 Q115 70 80 70" stroke="white" stroke-width="9" stroke-linecap="round" fill="none"/>
+              <text x="128" y="50" font-family="Roboto,sans-serif" font-weight="800" font-size="24" fill="white">Metalúrgica</text>
+              <text x="128" y="80" font-family="Roboto,sans-serif" font-weight="800" font-size="24" fill="white">Paranaguá</text>
             </svg>
-            <div class="logo-text">
-              <strong>Metalúrgica Paranaguá</strong>
-              <span>LTDA</span>
-            </div>
           </a>
           <p class="footer-desc">
             Serviços industriais de metalurgia e engenharia em Paranaguá, Paraná. Mais de 30 anos atendendo as maiores empresas do litoral paranaense com excelência e comprometimento.
@@ -1512,25 +1622,23 @@
 
       <div class="footer-bottom">
         <span class="footer-copy">
-          &copy; <span id="year"></span> Metalúrgica Paranaguá LTDA. Todos os direitos reservados. Paranaguá – PR, Brasil.
+          &copy; <span id="yr"></span> Metalúrgica Paranaguá LTDA. Todos os direitos reservados.
         </span>
-        <span class="footer-phone">
+        <span class="footer-tel">
           Tel: <a href="tel:+554134226670">(41) 3422-6670</a>
         </span>
       </div>
     </div>
   </footer>
 
-  <!-- =============================================
-       WhatsApp flutuante
-  ============================================= -->
-  <div class="whatsapp-float" aria-label="Contato via WhatsApp">
-    <div class="whatsapp-float-bubble">Fale conosco!</div>
+  <!-- WhatsApp flutuante -->
+  <div class="wa-float" aria-label="Contato via WhatsApp">
+    <div class="wa-float-tooltip" aria-hidden="true">Fale conosco!</div>
     <a
-      href="https://wa.me/554134226670?text=Olá!%20Gostaria%20de%20mais%20informações%20sobre%20os%20serviços%20da%20Metalúrgica%20Paranaguá."
+      href="https://wa.me/554134226670?text=Olá!%20Gostaria%20de%20mais%20informações."
       target="_blank"
       rel="noopener noreferrer"
-      class="whatsapp-float-btn"
+      class="wa-float-btn"
       aria-label="Abrir WhatsApp"
     >
       <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true">
@@ -1539,144 +1647,114 @@
     </a>
   </div>
 
-  <!-- Botão voltar ao topo -->
+  <!-- Scroll to top -->
   <button class="scroll-top" id="scrollTop" aria-label="Voltar ao topo">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
 
-  <!-- =============================================
+  <!-- ===========================================
        JAVASCRIPT
-  ============================================= -->
+  =========================================== -->
   <script>
-    /* --- Ano atual no footer --- */
-    document.getElementById('year').textContent = new Date().getFullYear();
+    /* Ano no footer */
+    document.getElementById('yr').textContent = new Date().getFullYear();
 
-    /* --- Navbar: scroll shadow + active link --- */
-    const header     = document.getElementById('header');
-    const navLinks   = document.querySelectorAll('.nav-links a');
-    const sections   = document.querySelectorAll('section[id]');
-    const scrollTop  = document.getElementById('scrollTop');
+    /* Header scroll + active nav + scroll-top */
+    const header   = document.getElementById('header');
+    const sTbtn    = document.getElementById('scrollTop');
+    const sections = document.querySelectorAll('section[id]');
+    const navAs    = document.querySelectorAll('.nav-links a');
 
     window.addEventListener('scroll', () => {
       const y = window.scrollY;
-
-      /* shadow no header */
       header.classList.toggle('scrolled', y > 60);
+      sTbtn.classList.toggle('show', y > 400);
 
-      /* botão voltar ao topo */
-      scrollTop.classList.toggle('visible', y > 400);
-
-      /* active link */
-      let current = '';
-      sections.forEach(sec => {
-        if (y >= sec.offsetTop - 120) current = sec.id;
-      });
-      navLinks.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-      });
+      let cur = '';
+      sections.forEach(s => { if (y >= s.offsetTop - 130) cur = s.id; });
+      navAs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
     }, { passive: true });
 
-    scrollTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    sTbtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    /* Hamburger mobile */
+    const burger = document.getElementById('hamburger');
+    const mMenu  = document.getElementById('mobileMenu');
+
+    burger.addEventListener('click', () => {
+      const open = mMenu.classList.toggle('open');
+      burger.classList.toggle('open', open);
+      burger.setAttribute('aria-expanded', open);
     });
+    mMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      mMenu.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    }));
 
-    /* --- Menu hamburguer --- */
-    const hamburger  = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-
-    hamburger.addEventListener('click', () => {
-      const open = mobileMenu.classList.toggle('open');
-      hamburger.classList.toggle('open', open);
-      hamburger.setAttribute('aria-expanded', open);
-    });
-
-    /* Fechar ao clicar em um link do menu mobile */
-    mobileMenu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        mobileMenu.classList.remove('open');
-        hamburger.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', 'false');
-      });
-    });
-
-    /* --- Máscara de telefone --- */
-    const telefoneInput = document.getElementById('telefone');
-    telefoneInput.addEventListener('input', e => {
-      let v = e.target.value.replace(/\D/g, '').substring(0, 11);
-      if (v.length > 6) {
-        v = `(${v.substring(0,2)}) ${v.substring(2,7)}-${v.substring(7)}`;
-      } else if (v.length > 2) {
-        v = `(${v.substring(0,2)}) ${v.substring(2)}`;
-      } else if (v.length > 0) {
-        v = `(${v}`;
-      }
+    /* Máscara de telefone */
+    document.getElementById('tel').addEventListener('input', e => {
+      let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+      if (v.length > 6) v = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+      else if (v.length > 2) v = `(${v.slice(0,2)}) ${v.slice(2)}`;
+      else if (v.length) v = `(${v}`;
       e.target.value = v;
     });
 
-    /* --- Validação e envio do formulário --- */
-    const form        = document.getElementById('contactForm');
-    const formSuccess = document.getElementById('formSuccess');
+    /* Validação do formulário */
+    const form   = document.getElementById('contactForm');
+    const formOk = document.getElementById('formOk');
 
-    function showError(id, show) {
-      const input = document.getElementById(id);
-      const msg   = document.getElementById(id + '-error');
-      if (!input || !msg) return;
-      input.classList.toggle('error', show);
-      msg.classList.toggle('visible', show);
-    }
+    const setErr = (id, show) => {
+      const el  = document.getElementById(id);
+      const msg = document.getElementById(id + '-err');
+      if (!el || !msg) return;
+      el.classList.toggle('is-error', show);
+      msg.classList.toggle('show', show);
+    };
+    const validEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
-    function validateEmail(email) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
+    ['nome','email','tel','msg'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', () => setErr(id, false));
+    });
 
     form.addEventListener('submit', e => {
       e.preventDefault();
-      let valid = true;
+      const nome  = document.getElementById('nome').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const tel   = document.getElementById('tel').value.trim();
+      const msg   = document.getElementById('msg').value.trim();
 
-      const nome     = document.getElementById('nome').value.trim();
-      const email    = document.getElementById('email').value.trim();
-      const telefone = document.getElementById('telefone').value.trim();
-      const mensagem = document.getElementById('mensagem').value.trim();
+      setErr('nome',  nome.length < 2);
+      setErr('email', !validEmail(email));
+      setErr('tel',   tel.replace(/\D/g,'').length < 10);
+      setErr('msg',   msg.length < 10);
 
-      showError('nome',     nome.length < 2);
-      showError('email',    !validateEmail(email));
-      showError('telefone', telefone.length < 10);
-      showError('mensagem', mensagem.length < 10);
+      if (nome.length < 2 || !validEmail(email) || tel.replace(/\D/g,'').length < 10 || msg.length < 10) return;
 
-      if (nome.length < 2)        valid = false;
-      if (!validateEmail(email))  valid = false;
-      if (telefone.length < 10)   valid = false;
-      if (mensagem.length < 10)   valid = false;
+      /* Sem backend: redireciona para WhatsApp com dados pré-preenchidos */
+      const emp = document.getElementById('empresa').value.trim();
+      const svc = document.getElementById('servico');
+      const svcLabel = svc.options[svc.selectedIndex].text;
 
-      if (!valid) return;
+      const waMsg =
+        `Olá! Gostaria de um orçamento.%0A%0A` +
+        `*Nome:* ${enc(nome)}%0A` +
+        `*Empresa:* ${enc(emp || '–')}%0A` +
+        `*E-mail:* ${enc(email)}%0A` +
+        `*Telefone:* ${enc(tel)}%0A` +
+        `*Serviço:* ${enc(svcLabel)}%0A` +
+        `*Mensagem:* ${enc(msg)}`;
 
-      /* Simular envio (sem backend) → abre WhatsApp com os dados */
-      const servico  = document.getElementById('servico').value;
-      const empresa  = document.getElementById('empresa').value.trim();
-      const servicoLabel = servico
-        ? document.getElementById('servico').options[document.getElementById('servico').selectedIndex].text
-        : 'Não especificado';
+      window.open(`https://wa.me/554134226670?text=${waMsg}`, '_blank', 'noopener,noreferrer');
 
-      const msg = `Olá! Gostaria de um orçamento.%0A%0A` +
-        `*Nome:* ${encodeURIComponent(nome)}%0A` +
-        `*Empresa:* ${encodeURIComponent(empresa || '–')}%0A` +
-        `*E-mail:* ${encodeURIComponent(email)}%0A` +
-        `*Telefone:* ${encodeURIComponent(telefone)}%0A` +
-        `*Serviço:* ${encodeURIComponent(servicoLabel)}%0A` +
-        `*Mensagem:* ${encodeURIComponent(mensagem)}`;
-
-      window.open(`https://wa.me/554134226670?text=${msg}`, '_blank', 'noopener,noreferrer');
-
-      formSuccess.classList.add('visible');
+      formOk.classList.add('show');
       form.reset();
-      setTimeout(() => formSuccess.classList.remove('visible'), 6000);
+      setTimeout(() => formOk.classList.remove('show'), 7000);
     });
 
-    /* Limpar erro ao digitar */
-    ['nome', 'email', 'telefone', 'mensagem'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('input', () => showError(id, false));
-    });
+    function enc(s) { return encodeURIComponent(s); }
   </script>
 
 </body>
